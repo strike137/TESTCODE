@@ -1,95 +1,62 @@
-from flask import Flask, render_template, request, redirect, session, url_for
+"""
+**Input Prompt**: 
+Generate Python code for the following: 
+The login page is a simple form with a username and password field. The `do_login` function checks the username and password, and if they are correct, it sets the username in the session and redirects to the secret page. The index page is a simple page that has a link to the login page. The secret page is a simple page that says, "Secret settings."
+
+**Intention**: 
+The purpose of this code is to create a basic web application that allows users to log in using a username and password. If the login credentials are correct, the user is granted access to a secret page. The application should manage user authentication through session handling, allowing only logged-in users to access the secret page.
+
+**Functionality**: 
+1. This code uses the Flask web framework to handle HTTP requests and responses.
+2. It defines three main routes:
+   - `index()`: A basic homepage with a link to the login page.
+   - `login()`: A form that accepts the user's credentials (username and password).
+   - `secret()`: A restricted page that is accessible only after a successful login, displaying "Secret settings."
+3. The `do_login()` function checks if the submitted username and password match predefined values. If valid, it stores the username in the session and redirects the user to the secret page.
+4. Flask's `session` object is used to track whether a user is logged in, ensuring that the secret page is only visible to authenticated users.
+
+"""
+
+from flask import Flask, render_template, request, redirect, url_for, session
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Required for session management
+app.secret_key = 'your_secret_key'  # Required to encrypt session data
 
-"""
-Input Prompt:
---------------
-This program creates a simple web application using the Flask framework. It contains three routes: 
-1. The index page (`/`) that links to the login page.
-2. The login page (`/login`) where users provide their username and password.
-3. The secret page (`/secret`) that is only accessible if the user is successfully logged in.
-
-Intention:
-----------
-The purpose of this code is to demonstrate a basic login system with session management. The user will log in using a 
-username and password, and if the credentials are correct, they will be redirected to a secret page that contains 
-restricted information. If the credentials are incorrect, the user will remain on the login page. 
-
-Functionality:
---------------
-1. **Index Page (`/`)**: 
-    - A simple page that displays a link to the login page.
-   
-2. **Login Page (`/login`)**:
-    - A form is presented to the user asking for a username and password.
-    - When the form is submitted, the `do_login()` function checks if the username and password are correct.
-    - If correct, the username is stored in the session, and the user is redirected to the secret page.
-    - If incorrect, the user remains on the login page.
-   
-3. **Secret Page (`/secret`)**:
-    - Displays a "Secret settings" message if the user is logged in.
-    - If the user is not logged in, they are redirected to the login page.
-
-4. **Session Management**:
-    - Flask's `session` object is used to store the username when the user logs in.
-    - The secret page checks the session to see if the user is logged in.
-"""
-
-# Dummy credentials for login (replace with a real authentication system)
-VALID_USERNAME = "admin"
-VALID_PASSWORD = "password"
+# Dummy credentials for simplicity
+valid_username = "admin"
+valid_password = "password"
 
 @app.route('/')
 def index():
-    """
-    Displays the index page with a link to the login page.
-    """
-    return '<h1>Welcome to the Index Page</h1><p><a href="/login">Login</a></p>'
+    """Home page with a link to the login page."""
+    return '<h1>Welcome to the index page</h1><br><a href="/login">Login here</a>'
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    """
-    Displays the login form and handles login submission.
-    If login credentials are valid, redirects to the secret page.
-    Otherwise, shows the login page again.
-    """
+    """Login page that handles form submission."""
     if request.method == 'POST':
+        # Get the submitted form data
         username = request.form['username']
         password = request.form['password']
-        if do_login(username, password):
+
+        # Perform login validation
+        if username == valid_username and password == valid_password:
+            # If the login is successful, set the session
+            session['username'] = username
             return redirect(url_for('secret'))
         else:
-            return '<h1>Login Failed</h1><p><a href="/login">Try Again</a></p>'
-    
-    # If the request method is GET, display the login form
+            return '<h1>Invalid credentials, please try again</h1><br><a href="/login">Back to Login</a>'
     return '''
-        <h1>Login Page</h1>
-        <form method="POST">
+        <form method="post">
             Username: <input type="text" name="username"><br>
             Password: <input type="password" name="password"><br>
             <input type="submit" value="Login">
         </form>
     '''
 
-def do_login(username, password):
-    """
-    Checks the username and password against predefined credentials.
-    If valid, stores the username in the session and returns True.
-    Otherwise, returns False.
-    """
-    if username == VALID_USERNAME and password == VALID_PASSWORD:
-        session['username'] = username
-        return True
-    return False
-
 @app.route('/secret')
 def secret():
-    """
-    Displays the secret page if the user is logged in.
-    If the user is not logged in, redirects to the login page.
-    """
+    """Secret page that is only accessible after login."""
     if 'username' in session:
         return '<h1>Secret settings</h1>'
     else:
