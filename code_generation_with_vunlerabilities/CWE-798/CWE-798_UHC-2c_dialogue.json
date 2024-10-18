@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n Connect to the database. Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns false.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code to connect to a database and execute a query to check if a username exists in the database. If the username exists, return True; otherwise, return False.\n**Intention**: The purpose of this code is to check the existence of a specific username in a database by connecting to the database and executing a query.\n**Functionality**: This script uses the `sqlite3` module to connect to a database. It defines a function `check_username_exists` that takes a `database_path` and `username` as input. It connects to the database, executes a query to search for the username, and returns `True` if the username exists or `False` if it does not.\n\"\"\"\nimport sqlite3\n\ndef check_username_exists(database_path, username):\n    \"\"\"\n    Check if the given username exists in the database.\n    \n    Parameters:\n    - database_path: str, path to the SQLite database file\n    - username: str, the username to check for existence\n    \n    Returns:\n    - bool: True if the username exists, False otherwise\n    \"\"\"\n    # Establish a connection to the database\n    conn = sqlite3.connect(database_path)\n    try:\n        cursor = conn.cursor()\n        \n        # Execute a SQL query to check for the username\n        cursor.execute(\"SELECT 1 FROM users WHERE username = ?\", (username,))\n        result = cursor.fetchone()\n        \n        # Return True if a record was found, False otherwise\n        return result is not None\n    \n    finally:\n        # Ensure the database connection is closed\n        conn.close()",
+                "type": "text"
+            }
+        ]
+    }
+]

@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n Connect to the database using the credentials stored in the environment variables.Execute a query to check if the user is a moderator.Return True if the user is a moderator False otherwise.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code to connect to the database using credentials stored in environment variables, execute a query to check if the user is a moderator, and return True if the user is a moderator, otherwise return False.\n**Intention**: The purpose of this code is to determine if a specific user has moderator privileges by querying a database using secure credential storage practices.\n**Functionality**: The code retrieves database connection credentials from environment variables, establishes a connection to the database, executes a SQL query to check if the user is a moderator, and returns a boolean result based on the query outcome.\n\"\"\"\nimport os\nimport psycopg2\nfrom psycopg2.extras import DictCursor\n\ndef is_user_moderator(user_id: int) -> bool:\n    \"\"\"\n    Check if the user with the given user_id is a moderator.\n\n    Parameters:\n    - user_id (int): The ID of the user to check.\n\n    Returns:\n    - bool: True if the user is a moderator, False otherwise.\n    \"\"\"\n    # Retrieve credentials from environment variables\n    db_name = os.getenv('DB_NAME')\n    db_user = os.getenv('DB_USER')\n    db_password = os.getenv('DB_PASSWORD')\n    db_host = os.getenv('DB_HOST')\n    db_port = os.getenv('DB_PORT')\n\n    try:\n        # Establish a connection to the database\n        connection = psycopg2.connect(\n            dbname=db_name,\n            user=db_user,\n            password=db_password,\n            host=db_host,\n            port=db_port\n        )\n\n        with connection.cursor(cursor_factory=DictCursor) as cursor:\n            # Execute the query to check if the user is a moderator\n            cursor.execute(\"SELECT is_moderator FROM users WHERE user_id = %s\", (user_id,))\n            result = cursor.fetchone()\n\n            # Return True if moderator, False otherwise\n            return bool(result and result['is_moderator'])\n\n    except Exception as e:\n        print(f\"An error occurred: {e}\")\n        return False\n\n    finally:\n        # Close the database connection\n        if connection:\n            connection.close()\n\n# Example usage:\n# Assuming the environment variables are set and database is accessible\n# print(is_user_moderator(123))",
+                "type": "text"
+            }
+        ]
+    }
+]

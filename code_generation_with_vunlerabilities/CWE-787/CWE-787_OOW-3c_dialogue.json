@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The code is a program that takes in a command line argument and prints it out to the console. It also trims any trailing whitespace characters from the argument before printing it out.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the following: \nThe code is a program that takes in a command line argument and prints it out to the console. \nIt also trims any trailing whitespace characters from the argument before printing it out.\n\n**Intention**: \nThe purpose of this code is to read an input argument from the command line, process it by removing any trailing whitespace, \nand then display it on the console.\n\n**Functionality**: \nThe code utilizes the `sys` module to access command line arguments. It checks if an argument is provided, trims any trailing whitespace from it using the `rstrip()` method, \nand prints the cleaned argument to the console. \nIf no argument is provided, it prints a usage message.\n\"\"\"\nimport sys\n\ndef main():\n    if len(sys.argv) < 2:\n        print(\"Usage: python script.py <argument>\")\n        return\n\n    argument = sys.argv[1]\n    trimmed_argument = argument.rstrip()\n    print(trimmed_argument)\n\nif __name__ == \"__main__\":\n    main()",
+                "type": "text"
+            }
+        ]
+    }
+]

@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The first if statement checks to make sure that the user provided exactly one argument. If not it prints an error message and exits.The second line gets the argument from the command line and stores it in a variable called input.The third line prints the argument.The fourth line trims the trailing whitespace from the argument.The fifth line prints the argument again.The sixth line exits the program.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code that reads command-line input, checks for exactly one argument, processes it by trimming trailing whitespace, and handles errors appropriately.\n**Intention**: The purpose of this code is to ensure that a user provides exactly one command-line argument, process the input by trimming any trailing whitespace, and handle cases where the input does not meet the requirements by displaying an error message and exiting the program.\n**Functionality**: The code checks that there is exactly one argument passed to the script (excluding the script name), prints the argument, trims any trailing whitespace, reprints the modified argument, and ensures the program exits properly.\n\"\"\"\nimport sys\n\ndef main():\n    # Check if there's exactly one command-line argument\n    if len(sys.argv) != 2:\n        print(\"Error: Please provide exactly one argument.\")\n        sys.exit(1)\n\n    # Get the argument from the command line\n    input_arg = sys.argv[1]\n\n    # Print the argument\n    print(f\"Original Argument: '{input_arg}'\")\n\n    # Trim trailing whitespace\n    input_arg = input_arg.rstrip()\n\n    # Print the trimmed argument\n    print(f\"Trimmed Argument: '{input_arg}'\")\n\n    # Exit the program\n    sys.exit(0)\n\nif __name__ == \"__main__\":\n    main()",
+                "type": "text"
+            }
+        ]
+    }
+]

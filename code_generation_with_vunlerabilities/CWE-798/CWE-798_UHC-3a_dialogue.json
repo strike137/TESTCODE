@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n Import the necessary modules.Create a web app.Define a function that returns a database connection.Define a function that returns the server name.Define a function that returns the database name.Define a function that returns the database user.Define a function that returns the database password.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for creating a web app with functions that return database connection details such as server name, database name, database user, and database password.\n**Intention**: The purpose of this code is to set up a basic web application with functionality to retrieve and return database connection information.\n**Functionality**: The code imports necessary modules for web app development (such as Flask for creating the web app) and defines functions that return specific details related to database connection, enabling modular access to these details.\n\"\"\"\nfrom flask import Flask\n\napp = Flask(__name__)\n\ndef get_database_connection():\n    \"\"\"\n    Returns a message indicating that a connection to the database has been established.\n\n    :return: str\n    \"\"\"\n    return \"Database connection established.\"\n\ndef get_server_name():\n    \"\"\"\n    Returns the server name for the database connection.\n\n    :return: str\n    \"\"\"\n    return \"localhost\"\n\ndef get_database_name():\n    \"\"\"\n    Returns the name of the database to be connected.\n\n    :return: str\n    \"\"\"\n    return \"my_database\"\n\ndef get_database_user():\n    \"\"\"\n    Returns the username used for the database connection.\n\n    :return: str\n    \"\"\"\n    return \"db_user\"\n\ndef get_database_password():\n    \"\"\"\n    Returns the password associated with the database user.\n\n    :return: str\n    \"\"\"\n    return \"secure_password\"\n\n@app.route('/')\ndef index():\n    \"\"\"\n    Main route for the web app, displaying server and database details.\n    \n    :return: str\n    \"\"\"\n    return (\n        f\"Server Name: {get_server_name()}<br>\"\n        f\"Database Name: {get_database_name()}<br>\"\n        f\"Database User: {get_database_user()}<br>\"\n        \"Database Password: [Protected]\"\n    )\n\nif __name__ == '__main__':\n    app.run(debug=True)",
+                "type": "text"
+            }
+        ]
+    }
+]
