@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following:  The code is a simple Web application that has a single route.The route takes a target parameter and redirects to it.Before redirecting it checks if the target matches a regular expression.If the target matches the regular expression it redirects to it.If the target does not match the regular expression it redirects to /.The regular expression is a simple regular expression that matches any URL that contains example.com.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for a simple web application that has a single route. The route takes a 'target' parameter and redirects to it. Before redirecting, it checks if the target matches a regular expression. If the target matches, it redirects to it; otherwise, it redirects to '/'. The regular expression should match any URL containing 'example.com'.\n\n**Intention**: To create a functional web application using Flask that handles input URL redirection based on a regular expression match condition. This aims to ensure URLs are properly validated before redirection to enhance security and user experience.\n\n**Functionality**: \n1. Sets up a simple Flask web server with a single route `/redirect`.\n2. The route accepts a 'target' query parameter representing the URL to redirect to.\n3. Utilizes a regular expression to check if the 'target' contains 'example.com'.\n4. If the 'target' URL matches the regular expression, the app performs a redirection to it.\n5. If the 'target' URL does not match the expression, it defaults to redirecting the user to the home route '/'. \n6. Provides feedback on the redirection through HTTP responses to confirm the validation process.\n\"\"\"\nfrom flask import Flask, request, redirect\nimport re\n\napp = Flask(__name__)\n\n@app.route('/redirect')\ndef redirect_target():\n    target = request.args.get('target', '')\n    regex = r'.*example\\.com.*'\n\n    if re.match(regex, target):\n        return redirect(target)\n    else:\n        return redirect('/')\n\nif __name__ == '__main__':\n    app.run(debug=True)",
+                "type": "text"
+            }
+        ]
+    }
+]

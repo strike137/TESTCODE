@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following:  The code is a simple web application that has a route /redirect/<url> that takes a URL as a parameter.The function redirect_invalid_url() checks if the URL is from example.com. If it is it redirects the user to the URL. If it is not it returns an error message.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for a simple web application that has a route /redirect/<url> which takes a URL as a parameter. The function `redirect_invalid_url()` checks if the URL is from example.com. If it is, it redirects the user to the URL. If it is not, it returns an error message.\n\n**Intention**: The purpose of this code is to create a web application using Flask that facilitates URL redirection based on a specified domain validation. This can be useful for controlling traffic to specific allowed domains by verifying and redirecting only to those that match a predefined pattern.\n\n**Functionality**: The code defines a Flask application with a single route `/redirect/<url>`. The function `redirect_invalid_url(url)` is responsible for checking if the provided URL belongs to the domain 'example.com'. If so, it redirects the user to that URL. If the URL does not match the domain requirement, an error message is returned indicating that the URL is not allowed.\n\"\"\"\nfrom flask import Flask, redirect, url_for, abort\nimport re\n\napp = Flask(__name__)\n\ndef is_valid_url(url):\n    # Check if the URL belongs to 'example.com'\n    return bool(re.match(r\"^https?://(www\\.)?example\\.com\", url))\n\n@app.route('/redirect/<path:url>')\ndef redirect_invalid_url(url):\n    # Prepend 'http://' if the scheme is not provided\n    if not re.match(r\"^https?://\", url):\n        url = \"http://\" + url\n    \n    if is_valid_url(url):\n        return redirect(url)\n    else:\n        abort(400, \"Invalid URL: Only URLs from 'example.com' are allowed.\")\n\nif __name__ == '__main__':\n    app.run(debug=True)",
+                "type": "text"
+            }
+        ]
+    }
+]

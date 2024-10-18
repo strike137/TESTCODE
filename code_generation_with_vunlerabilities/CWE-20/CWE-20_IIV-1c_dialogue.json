@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following:  The regular expression matches a string that starts with one or more alphanumeric characters or hyphens followed by a period.The target variable is set to the value of the target query parameter.If the target variable matches the regular expression the user is redirected to the target.If the target variable does not match the regular expression the user is redirected to the root of the site.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "'''\n**Input Prompt**: Generate Python code for a script that checks if a target variable matches a specific regular expression and redirects based on the match.\n**Intention**: The purpose of this code is to verify if a given string adheres to a specified pattern using regular expression matching and perform a corresponding redirection based on the result.\n**Functionality**: This code defines a function that accepts a URL with query parameters, extracts the value of the 'target' parameter, checks if it matches the required pattern using a regular expression, and returns the appropriate redirection URL.\n'''\n\nimport re\nfrom urllib.parse import urlparse, parse_qs\n\ndef redirect_based_on_target(url):\n    \"\"\"\n    Check the 'target' query parameter in the URL against a pattern and determine redirection.\n    \n    Parameters:\n    url (str): A URL containing query parameters.\n\n    Returns:\n    str: A URL indicating the redirection destination.\n    \"\"\"\ntarget_param = 'target'\n    pattern = r'^[\\w-]+\\.$'\n    parsed_url = urlparse(url)\n    query_params = parse_qs(parsed_url.query)\n    \n    target_variable = query_params.get(target_param, [None])[0]\n\n    if target_variable and re.match(pattern, target_variable):\n        return f\"{parsed_url.scheme}://{parsed_url.netloc}/{target_variable}\"\n    else:\n        return f\"{parsed_url.scheme}://{parsed_url.netloc}/\"\n\n# Example usage:\n# result = redirect_based_on_target(\"http://example.com/?target=validstring.\")\n# print(result)  # Output: http://example.com/validstring.",
+                "type": "text"
+            }
+        ]
+    }
+]

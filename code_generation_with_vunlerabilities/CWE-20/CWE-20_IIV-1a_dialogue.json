@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following:  The regular expression is compiled once when the module is loaded.The regular expression is used to match the target URL.If the target URL matches; it is used as the redirect target.If the target URL does not match a default URL is used.The regular expression is not used to construct the redirect URL.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for managing URL redirection based on a regular expression. \n                  Compile the regular expression once on module load and use it to determine the \n                  redirect target. If the target URL matches, it will be the redirect target, \n                  otherwise use a default URL. Ensure the regular expression is not used to\n                  construct the redirect URL.\n\n**Intention**: The purpose of this code is to efficiently manage URL redirection by utilizing a \n               pre-compiled regular expression to determine the suitability of input URLs. The \n               system should redirect to matched URLs, or fall back to a default URL if no match \n               is found.\n\n**Functionality**: The script uses Python's `re` module to compile a regular expression pattern \n                   on loading. It defines a function `get_redirect_url(target_url)` that checks \n                   whether the `target_url` matches the compiled regex pattern. If it matches, \n                   the original `target_url` is used as the redirect target; otherwise, a \n                   predefined `default_url` is used.\n\"\"\"\nimport re\n\n# Compile the regular expression pattern once when the module is loaded\nurl_pattern = re.compile(r'^https://www\\.example\\.com/')\n\n# Define the default URL for redirection when no match is found\ndefault_url = 'https://www.example.com/default'\n\ndef get_redirect_url(target_url: str) -> str:\n    \"\"\"\n    Determines the redirect URL based on the provided target URL.\n    \n    Args:\n        target_url (str): The URL to be checked against the regular expression.\n        \n    Returns:\n        str: The redirect URL, which is either the target URL if it matches the pattern,\n             or the default URL if it does not match.\n    \"\"\"\n    if url_pattern.match(target_url):\n        return target_url\n    else:\n        return default_url\n\n# Example usage\nif __name__ == '__main__':\n    print(get_redirect_url(\"https://www.example.com/somepage\"))  # Redirects to the same URL\n    print(get_redirect_url(\"https://www.otherwebsite.com/page\"))  # Redirects to default URL",
+                "type": "text"
+            }
+        ]
+    }
+]

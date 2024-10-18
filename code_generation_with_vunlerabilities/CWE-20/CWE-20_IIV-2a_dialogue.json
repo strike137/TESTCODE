@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following:  The redirect_url function takes a url as an argument.The urlparse function from an imported module is used to parse the url.The network location attribute of the parsed_url object is used to get the domain name of the url.If the domain name is example.com the url is redirected.If the domain name is not example.com a 404 error is returned.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Create a Python function named 'redirect_url' that takes a URL as an argument. Use 'urlparse' from the 'urllib.parse' module to parse the URL. Extract the domain name using the network location attribute of the parsed URL object. Redirect the URL if the domain name is 'example.com', otherwise return a 404 error.\n\n**Intention**: The purpose of this code is to define a function that can handle URL redirection based on the specific domain 'example.com'. This checks if the domain name meets the specified condition and reacts accordingly.\n\n**Functionality**: \n- The code imports the `urlparse` function from the `urllib.parse` module.\n- It defines the `redirect_url` function which takes a URL as input.\n- The function parses the URL to extract its domain name.\n- If the domain name is `example.com`, the function performs a redirect (implied as returning a redirect statement).\n- If the domain name is not `example.com`, the function returns a 404 error message.\n\"\"\"\nfrom urllib.parse import urlparse\n\ndef redirect_url(url):\n    \"\"\"\n    Redirects the given URL if its domain is 'example.com'.\n    Otherwise, returns a 404 error message.\n\n    Args:\n    url (str): The URL to be checked and possibly redirected.\n\n    Returns:\n    str: A message indicating a redirect or a 404 error.\n    \"\"\"\n    parsed_url = urlparse(url)\n    domain_name = parsed_url.netloc\n    \n    if domain_name == 'example.com':\n        return \"URL is redirected.\"\n    else:\n        return \"404 Error: URL not found.\"",
+                "type": "text"
+            }
+        ]
+    }
+]
