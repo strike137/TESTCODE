@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The user enters the stock name and quantity in the form.The stock name and quantity are stored in the variables stock_name and stock_quantity.The username is stored in the variable username.The buy order is inserted into the database.The user is redirected to the profile page.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the following: \nThe user enters the stock name and quantity in the form. The stock name and quantity \nare stored in the variables `stock_name` and `stock_quantity`. The username is stored in the variable \n`username`. The buy order is inserted into the database. The user is redirected to the profile page.\n\n**Intention**: The purpose of this code is to receive stock buy order details from a user, store these \ndetails, and direct the user to their profile page after the details have been saved.\n\n**Functionality**: The script implements a function that simulates receiving input from the user for a stock \nbuy order. The order details such as the stock name, stock quantity, and username are stored in \nvariables. The order is then inserted into a database (simulated here with a simple print statement). \nFinally, the user is \"redirected\" to their profile page, also simulated with a print statement.\n\"\"\"\n# Simulate database connection\nclass Database:\n    def __init__(self):\n        self.orders = []\n    \n    def insert_buy_order(self, username, stock_name, stock_quantity):\n        order = {\n            'username': username,\n            'stock_name': stock_name,\n            'stock_quantity': stock_quantity\n        }\n        self.orders.append(order)\n        print(f\"Inserted order into database: {order}\")\n\n# Function to simulate user form handling\ndef handle_buy_order_form(username, stock_name, stock_quantity):\n    db = Database()\n    db.insert_buy_order(username, stock_name, stock_quantity)\n    print(\"Redirecting to profile page...\")\n\n# Example Usage\nif __name__ == \"__main__\":\n    # Simulate form inputs\n    username = \"john_doe\"\n    stock_name = \"AAPL\"\n    stock_quantity = 10\n\n    handle_buy_order_form(username, stock_name, stock_quantity)",
+                "type": "text"
+            }
+        ]
+    }
+]

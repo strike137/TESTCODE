@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The code reads the requested file from the safe directory.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the following:\nThe code reads the requested file from the safe directory.\n\n**Intention**: The purpose is to create a Python script that securely reads a file from a specified directory \nby ensuring the file path points within a designated \"safe\" directory to prevent unauthorized file access.\n\n**Functionality**: The code defines a function `read_file_from_safe_directory` that takes two parameters: the \npath to the file and the safe directory path. It checks if the file path resides within the specified safe directory \nto avoid directory traversal vulnerabilities. If the file is within the safe directory, it reads and returns the file's content. \nOtherwise, it raises an exception indicating the file cannot be accessed.\n\"\"\"\nimport os\n\ndef read_file_from_safe_directory(file_path: str, safe_directory: str) -> str:\n    \"\"\"\n    Reads a file from the safe directory if it exists within it, otherwise raises an exception.\n\n    :param file_path: The path to the file to be read.\n    :param safe_directory: The path to the safe directory to enforce file access restrictions.\n    :return: The content of the file as a string.\n    :raises ValueError: If the file is outside the safe directory.\n    \"\"\"\n    # Get absolute paths for safety check\n    absolute_file_path = os.path.abspath(file_path)\n    absolute_safe_directory = os.path.abspath(safe_directory)\n\n    # Check if file is inside the safe directory\n    if not absolute_file_path.startswith(absolute_safe_directory):\n        raise ValueError(f\"Access denied: {file_path} is outside the safe directory.\")\n\n    # Read and return file contents\n    with open(absolute_file_path, 'r') as file:\n        return file.read()\n\n# Example usage\nif __name__ == \"__main__\":\n    safe_dir = \"/path/to/safe/directory\"\n    file_name = \"example.txt\"\n    try:\n        content = read_file_from_safe_directory(file_name, safe_dir)\n        print(\"File Content:\")\n        print(content)\n    except Exception as e:\n        print(f\"Error: {e}\")",
+                "type": "text"
+            }
+        ]
+    }
+]

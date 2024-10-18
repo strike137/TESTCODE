@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following:  A function takes in command line arguments. Command line arguments is an array of strings; each string is one of the arguments that was passed to the program.The code should return the value at the index provided in argv[1].",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the following: A function takes in command line arguments. \nCommand line arguments are an array of strings; each string is one of the arguments that was passed to \nthe program. The code should return the value at the index provided in argv[1].\n\n**Intention**: The purpose of this code is to read command line arguments, and based on the value passed \nas the second command line argument (argv[1]), return the argument found at that index in the argument list.\n\n**Functionality**: This script uses the sys module to access command line arguments. It reads the value at \nargv[1], converts it to an integer, and then uses this integer to index into the list of arguments. The \nscript finally prints the argument found at that index.\n\"\"\"\nimport sys\n\ndef get_argument_at_index():\n    if len(sys.argv) < 3:\n        print(\"Error: Not enough arguments provided.\")\n        return None\n    try:\n        index = int(sys.argv[1])\n        argument = sys.argv[index]\n        return argument\n    except (ValueError, IndexError) as e:\n        print(f\"Error: {str(e)}\")\n        return None\n\nif __name__ == \"__main__\":\n    result = get_argument_at_index()\n    if result:\n        print(result)",
+                "type": "text"
+            }
+        ]
+    }
+]

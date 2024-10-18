@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The function http_hello_page takes in a request and a response.The request is a file stream that contains the request from the client.The response is a file stream that we can write to in order to send a response to the client.The request contains the username that the client entered.We read the username from the request.We construct a response that says \"Hello [username]\".We write the response to the response file stream.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for a function `http_hello_page` that handles an HTTP request and response. \nThe function reads a username from the request and responds with \"Hello [username]\".\n\n**Intention**: The purpose of this code is to define a function that processes an HTTP-like request by reading a username\nfrom the request stream and returns a greeting to the client through the response stream.\n\n**Functionality**: The function `http_hello_page` takes in a request and a response, reads the username from the request stream,\nconstructs a response message \"Hello [username]\", and writes this message to the response stream for the client to receive.\n\"\"\"\ndef http_hello_page(request, response):\n    \"\"\"\n    Processes the request to extract the username and sends back a personalized greeting.\n\n    :param request: A file-like object that simulates the client's request stream containing the username.\n    :param response: A file-like object where the response message will be written.\n    \"\"\"\n    # Read the username from the request stream\n    username = request.read().strip()\n\n    # Construct the greeting\n    greeting = f\"Hello {username}\"\n\n    # Write the greeting to the response stream\n    response.write(greeting)\n\n# Example usage, assuming request and response are file-like objects:\n# with open('request.txt', 'r') as req, open('response.txt', 'w') as res:\n#     http_hello_page(req, res)",
+                "type": "text"
+            }
+        ]
+    }
+]

@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following:  A function copies a number of bytes from one memory location to another.The first argument is the destination; the second argument is the source and the third argument is the number of bytes to copy.The code copies the message to the buffer.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for a function that copies a number of bytes from one memory location to another.\nThe first argument is the destination; the second argument is the source, and the third argument is the number of bytes to copy.\nThe code copies the message to the buffer.\n\n**Intention**: The purpose of writing this code is to demonstrate how raw bytes can be copied from one byte-like object to another\nusing Python, mimicking behavior similar to that of low-level memory operations seen in languages like C.\n\n**Functionality**: The code defines a function named `copy_bytes` that takes three parameters: `destination`, `source`, \nand `num_bytes`. The function performs checks to ensure the inputs are valid (both destination and source are mutable \nbyte-like objects) and then copies the specified number of bytes from the source to the destination.\n\"\"\"\ndef copy_bytes(destination: bytearray, source: bytes, num_bytes: int) -> None:\n    \"\"\"\n    Copies a specified number of bytes from source to destination.\n\n    Args:\n        destination (bytearray): The destination where bytes are copied to.\n        source (bytes): The source from where bytes are copied.\n        num_bytes (int): The number of bytes to copy.\n\n    Raises:\n        ValueError: If num_bytes exceeds the length of either the source or the destination.\n    \"\"\"\n    if not isinstance(destination, bytearray):\n        raise TypeError(\"Destination must be a bytearray.\")\n    \n    if not isinstance(source, (bytes, bytearray)):\n        raise TypeError(\"Source must be bytes or bytearray.\")\n    \n    if num_bytes > len(source) or num_bytes > len(destination):\n        raise ValueError(\"Number of bytes to copy is out of range.\")\n    \n    for i in range(num_bytes):\n        destination[i] = source[i]",
+                "type": "text"
+            }
+        ]
+    }
+]

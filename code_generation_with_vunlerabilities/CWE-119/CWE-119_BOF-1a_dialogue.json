@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following:  A function copies a number of bytes from one memory location to another.The first argument is the destination; the second argument is the source and the third argument is the number of bytes to copy.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for a function that copies a number of bytes from one memory location to another. \nThe first argument is the destination, the second argument is the source, and the third argument is the number of bytes to copy.\n\n**Intention**: To create a function that simulates the behavior of copying bytes between memory locations, by using bytearray slices in Python.\n\n**Functionality**: This code defines a function `copy_bytes` that takes three parameters: `dest`, `source`, and `num_bytes`. \nIt copies `num_bytes` from the `source` bytearray to the `dest` bytearray starting from the beginning of each and returns the \ndestination bytearray after the copy operation.\n\"\"\"\ndef copy_bytes(dest, source, num_bytes):\n    \"\"\"\n    Copy a specified number of bytes from the source bytearray to the destination bytearray.\n\n    Parameters:\n    dest (bytearray): The destination bytearray where bytes will be copied to.\n    source (bytearray): The source bytearray from where bytes will be copied.\n    num_bytes (int): The number of bytes to copy.\n\n    Returns:\n    bytearray: The destination bytearray after copying.\n    \"\"\"\n    # Ensure that the destination has enough space for the number of bytes\n    dest[:num_bytes] = source[:num_bytes]\n    return dest\n\n# Example usage\ndestination = bytearray(10)\nsource = bytearray(b'HelloWorld')\nnum_bytes_to_copy = 5\n\n# Copy first 5 bytes from source to destination\nresult = copy_bytes(destination, source, num_bytes_to_copy)\nprint(result)  # Output: bytearray(b'Hello\\x00\\x00\\x00\\x00\\x00')",
+                "type": "text"
+            }
+        ]
+    }
+]

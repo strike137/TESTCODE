@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The code uses a function to execute the ls command.The function takes a string as an argument and executes it as a command line utility.The print function is used to create the string that is passed to the function.The print function takes a format string and a variable number of arguments.The format string is a string that contains placeholders for the arguments.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for a function that executes the `ls` command. The \n                 function should accept a string argument and execute it as a command \n                 line utility. The print function creates the string passed to the \n                 function using a format string with placeholders for arguments.\n\n**Intention**: The purpose of this code is to dynamically construct a command using a format\n               string, then execute that command in the system shell, specifically to list \n               directory contents with `ls`.\n\n**Functionality**: The code defines a function `execute_command` that takes a formatted string \n                   as an input and executes it as a shell command using the `os.system` function. \n                   Additionally, it utilizes the `print` function to format and display the \n                   command before execution, substituting any placeholders within the string.\n\"\"\"\nimport os\n\ndef execute_command(command: str):\n    \"\"\"\n    Execute a shell command.\n    \n    :param command: A string representing the command to execute.\n    \"\"\"\n    os.system(command)\n\n# Example usage\ndirectory = \"/path/to/directory\"\nformatted_command = \"ls -l {}\".format(directory)\nprint(\"Executing command: {}\".format(formatted_command))\nexecute_command(formatted_command)",
+                "type": "text"
+            }
+        ]
+    }
+]

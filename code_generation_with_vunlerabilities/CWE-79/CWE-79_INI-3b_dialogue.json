@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The first line imports the web application class. An instance of this class will be our WSGI application.The second line creates the application object.The third line is a decorator. It tells the application which URL should call the associated function.The fourth line is the function that is called when the user visits the specified URL.The fifth line returns the message to the user.The sixth line runs the application.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for creating a simple web application. This application should instantiate a WSGI application object, define a route using a decorator, implement a function to handle requests to that route, and finally run the application.\n\n**Intention**: The goal is to demonstrate how to set up a basic web application using a popular web framework, defining a URL route and handling requests when users visit this route.\n\n**Functionality**: The code uses the Flask web framework to create a simple web application. It imports the relevant class from the framework, creates an application instance, defines a route with a decorator specifying which function handles requests to that route, and returns a message to the user. The application is started if the script is executed as the main module.\n\n\"\"\"\nfrom flask import Flask\n\n# Create an instance of the Flask class\napp = Flask(__name__)\n\n# Define a route decorator to link the URL to the function\n@app.route('/')\ndef hello():\n    \"\"\"Handle requests to the root URL by returning a greeting message.\"\"\"\n    return 'Hello, World!'\n\n# Run the application if the script is run directly\nif __name__ == '__main__':\n    app.run()",
+                "type": "text"
+            }
+        ]
+    }
+]

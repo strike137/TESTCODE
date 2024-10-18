@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n Open the archive.zip file as a tarfile.Extract all files from the archive to the /tmp/unpack directory.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the following: \nOpen the archive.zip file as a tarfile. Extract all files from the archive to the /tmp/unpack directory.\n\n**Intention**: The purpose of this code is to extract all files from a provided zipped archive and save them to a specified directory.\n\n**Functionality**: \nThe code opens a zip file named 'archive.zip', reads its contents, and extracts all files into the '/tmp/unpack' directory. It uses the `zipfile` module to handle zip files.\n\n1. Import the `zipfile` module to work with zip archives.\n2. Define the path of the zip file and the output directory.\n3. Use a context manager to open the zip file.\n4. Extract all the contents into the specified directory.\n\"\"\"\nimport os\nimport zipfile\n\n# File path for the zip file and destination directory\nzip_file_path = 'archive.zip'\ndestination_directory = '/tmp/unpack'\n\n# Ensure the destination directory exists\nos.makedirs(destination_directory, exist_ok=True)\n\n# Open the zip file and extract its contents\nwith zipfile.ZipFile(zip_file_path, 'r') as zip_ref:\n    zip_ref.extractall(destination_directory)",
+                "type": "text"
+            }
+        ]
+    }
+]

@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The user enters their email address into the unsubscribe form on the website. The email address is passed to the unsubscribe function.The unsubscribe function connects to the database and checks if the email address is in the database.If the email address is in the database it is removed.If the email address is not in the database the user is told that they are not in the database.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the following: \nThe user enters their email address into the unsubscribe form on the website. The email address is passed to the unsubscribe function. The unsubscribe function connects to the database and checks if the email address is in the database. If the email address is in the database it is removed. If the email address is not in the database the user is told that they are not in the database.\n\n**Intention**: The code is intended to facilitate the automatic removal of email addresses from a subscription database when users opt to unsubscribe. This ensures that users who wish to stop receiving communications can do so efficiently, while also providing feedback if the email cannot be found.\n\n**Functionality**: \n- The code defines a function `unsubscribe(email)` which handles the unsubscribe process.\n- It connects to a hypothetical database to search for the given email address.\n- If the email address is found in the database, the function deletes it and confirms the removal.\n- If the email address is not found, the function notifies the user that the email address isn't present in the database.\n\"\"\"\nimport sqlite3\n\ndef unsubscribe(email: str) -> None:\n    \"\"\"\n    Unsubscribes an email if it exists in the database.\n\n    Args:\n        email (str): The email address to unsubscribe.\n\n    Returns:\n        None\n    \"\"\"\n    # Connect to the database\n    conn = sqlite3.connect('subscriptions.db')\n    cursor = conn.cursor()\n\n    # Check if the email exists\n    cursor.execute(\"SELECT COUNT(*) FROM subscribers WHERE email = ?\", (email,))\n    result = cursor.fetchone()\n\n    if result[0] > 0:\n        # Remove the email from the database\n        cursor.execute(\"DELETE FROM subscribers WHERE email = ?\", (email,))\n        conn.commit()\n        print(f\"{email} has been removed from the database.\")\n    else:\n        print(f\"{email} is not found in the database.\")\n\n    # Close the connection\n    conn.close()",
+                "type": "text"
+            }
+        ]
+    }
+]

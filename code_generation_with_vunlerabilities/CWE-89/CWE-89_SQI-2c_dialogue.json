@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The user enters the stock name and quantity in the form.The form is submitted to the buy_order route.The buy_order route takes the stock name and quantity and inserts it into the database.The user is redirected to the stock_view page.The code is a very simple example of how to insert data into a database.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for handling a form submission where the user enters a stock name and quantity. The form submission directs to a 'buy_order' route, which processes the entries and updates a database. The user is then redirected to a 'stock_view' page.\n\n**Intention**: The purpose of this code is to demonstrate a simple web application flow where a user submits stock purchase information, which is processed and stored in a database, after which the user is redirected to a different page.\n\n**Functionality**: This script uses a Flask application to define a 'buy_order' route that processes a POST request. When the user submits the form, the stock name and quantity are extracted from the form data. These values are then inserted into a database (simulated using a SQLite database for simplicity). After updating the database, the user is redirected to a 'stock_view' page.\n\"\"\"\nfrom flask import Flask, request, redirect, url_for\nimport sqlite3\n\napp = Flask(__name__)\n\n# Function to initialize the database\ndef init_db():\n    conn = sqlite3.connect('stocks.db')\n    cursor = conn.cursor()\n    cursor.execute('''\n        CREATE TABLE IF NOT EXISTS orders (\n            id INTEGER PRIMARY KEY AUTOINCREMENT,\n            stock_name TEXT NOT NULL,\n            quantity INTEGER NOT NULL\n        )\n    ''')\n    conn.commit()\n    conn.close()\n\n# Route to handle the stock purchase\n@app.route('/buy_order', methods=['POST'])\ndef buy_order():\n    stock_name = request.form['stock_name']\n    quantity = int(request.form['quantity'])\n    \n    conn = sqlite3.connect('stocks.db')\n    cursor = conn.cursor()\n    cursor.execute('INSERT INTO orders (stock_name, quantity) VALUES (?, ?)', (stock_name, quantity))\n    conn.commit()\n    conn.close()\n    \n    return redirect(url_for('stock_view'))\n\n# Dummy route to simulate a stock view page\n@app.route('/stock_view')\ndef stock_view():\n    return \"Stock view page\"\n\nif __name__ == '__main__':\n    init_db()\n    app.run(debug=True)",
+                "type": "text"
+            }
+        ]
+    }
+]

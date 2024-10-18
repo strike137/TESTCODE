@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n A decorator is used to tell what URL should trigger our function.The function checks if the file exists in the images folder.If the file exists it sends the file to the browser.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the following: \nA decorator is used to tell what URL should trigger our function. The function checks if the file exists in the images folder. If the file exists, it sends the file to the browser.\n\n**Intention**: The purpose of this code is to create a web server route using a decorator to specify the URL endpoint that triggers a function. The function will verify if a specified image file exists in a designated folder and, if it does, respond by sending the file to the client.\n\n**Functionality**: The code utilizes Flask, a web framework for Python, to define a route using a decorator. When a GET request is made to the specified URL, the function checks for the existence of an image file in the 'images' directory. If the file exists, it sends the file to the client using Flask's `send_from_directory` function, enabling the requested image to be displayed or downloaded by the client.\n\"\"\"\nfrom flask import Flask, send_from_directory, abort\nimport os\n\napp = Flask(__name__)\n\n@app.route('/images/<filename>')\ndef get_image(filename):\n    \"\"\"Endpoint to serve an image file if it exists in the 'images' directory.\"\"\"\n    images_dir = 'images'\n    file_path = os.path.join(images_dir, filename)\n    \n    if os.path.isfile(file_path):\n        return send_from_directory(images_dir, filename)\n    else:\n        abort(404)\n\nif __name__ == '__main__':\n    app.run(debug=True)",
+                "type": "text"
+            }
+        ]
+    }
+]

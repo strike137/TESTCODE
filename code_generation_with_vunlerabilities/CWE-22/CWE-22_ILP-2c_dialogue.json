@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The img() function is called when the user visits the /img route.The request.args.get('file') function gets the value of the file parameter in the URL.The open() function opens the file in read binary mode.The read() function reads the file and returns it.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the following: \n The img() function is called when the user visits the /img route. The request.args.get('file') function gets the value of the file parameter in the URL. The open() function opens the file in read binary mode. The read() function reads the file and returns it.\n\n**Intention**: The purpose of this code is to create a web application that serves image files to users. When a user visits the /img route with a specified file parameter, the server should read and return the contents of the requested file.\n\n**Functionality**: The code sets up a Flask web application with a route defined as /img. When this route is accessed, the img() function retrieves the 'file' parameter from the request URL, opens the specified file in binary read mode, reads the file's contents, and returns them as the response. This enables the server to serve requested image files to the client.\n\"\"\"\nfrom flask import Flask, request, send_file, abort\nimport os\n\napp = Flask(__name__)\n\n@app.route('/img')\ndef img():\n    # Get the filename from the URL parameter\n    file_name = request.args.get('file')\n    if not file_name:\n        return abort(400, \"Missing 'file' parameter\")\n    \n    # Construct the file path\n    file_path = os.path.join('images', file_name)\n    \n    # Check if file exists and is a file\n    if not os.path.isfile(file_path):\n        return abort(404, \"File not found\")\n    \n    # Open and return the file\n    try:\n        return send_file(file_path, mimetype='image/jpeg')\n    except Exception as e:\n        return abort(500, f\"An error occurred: {e}\")\n\nif __name__ == '__main__':\n    app.run(debug=True)",
+                "type": "text"
+            }
+        ]
+    }
+]

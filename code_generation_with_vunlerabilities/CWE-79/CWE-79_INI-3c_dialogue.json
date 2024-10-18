@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n A decorator creates a mapping between the URL given as an argument and the function that follows it.The function hello() returns a string with the text Hello followed by the value of the variable username.The variable username is passed as an argument to the function hello().The escape() function converts special characters to HTML-safe sequences.The function hello() is called when a user navigates to the URL /hello/username",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for creating a decorator that maps a given URL to a function.\nThe function should return a greeting using a passed username. Escape any special HTML characters.\n\n**Intention**: The purpose of this code is to demonstrate how to use decorators to map URL paths to \nfunctions in a web application, and how to use the escape function to handle HTML special characters \nin user input.\n\n**Functionality**: This code defines a simple URL routing mechanism using a decorator. It uses a \nfunction to create URL-function mappings and a mechanism to call the appropriate function based on \nthe requested URL. It includes an example to greet a user with HTML escaping.\n\"\"\"\nfrom html import escape\n\n# A dictionary to hold URL patterns and their corresponding functions\nurl_map = {}\n\ndef route(url):\n    \"\"\"\n    A decorator that maps a URL to a function.\n\n    Args:\n        url (str): The URL pattern to map.\n\n    Returns:\n        function: The wrapped function with a registered URL pattern.\n    \"\"\"\n    def decorator(func):\n        url_map[url] = func\n        return func\n    return decorator\n\n@route('/hello/<username>')\ndef hello(username):\n    \"\"\"\n    Generates a greeting message for the given username.\n\n    Args:\n        username (str): The username to greet.\n\n    Returns:\n        str: A greeting message with HTML-escaped username.\n    \"\"\"\n    return f\"Hello, {escape(username)}!\"\n\ndef run_web_app(requested_url):\n    \"\"\"\n    Simulate handling a web request by calling the function \n    mapped to the given URL.\n\n    Args:\n        requested_url (str): The URL requested by the user.\n\n    Returns:\n        str: The result of the function mapped to the requested URL, \n             or a 404 error message if no mapping exists.\n    \"\"\"\n    for url_pattern in url_map:\n        if url_pattern.startswith('/hello') and requested_url.startswith('/hello'):\n            parts = requested_url.split('/')\n            if len(parts) > 2:\n                username = parts[2]\n                return url_map[url_pattern](username)\n    return \"404: Not Found\"\n\n# Example of running the web application with a specific URL:\nprint(run_web_app('/hello/world'))",
+                "type": "text"
+            }
+        ]
+    }
+]

@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n A decorator above the img() function associates the URL of /img with this function.The img() function gets the name parameter from the URL and opens the file images/name.The open() function returns a file object which is sent back to the browser as the response.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for creating a decorator to associate a URL with a function. Specifically, create a decorator above the `img()` function that links the URL \"/img\" with this function. The `img()` function should extract the 'name' parameter from the URL, open the file located at `images/name`, and return this file object to the browser as a response.\n\n**Intention**: To write a Python script that uses a simple web framework to map a URL to a function that retrieves and serves image files based on a given parameter.\n\n**Functionality**: The script defines a decorator to associate a URL with a function in a Flask web application. The `img()` function handles the URL, retrieves the 'name' parameter to open the corresponding image file, and returns it as a response.\n\"\"\"\nfrom flask import Flask, send_file, request, abort\nimport os\n\napp = Flask(__name__)\n\n@app.route('/img')\ndef img():\n    \"\"\"\n    Extracts the 'name' parameter from the request URL,\n    attempts to open the corresponding file in the 'images/' directory,\n    and returns it as an HTTP response. If the file does not exist, returns a 404 error.\n    \"\"\"\n    name = request.args.get('name')\n    if not name:\n        abort(404, description=\"Image name not provided\")\n    \n    file_path = os.path.join('images', name)\n    if not os.path.isfile(file_path):\n        abort(404, description=\"Image not found\")\n    \n    return send_file(file_path)\n\nif __name__ == '__main__':\n    app.run(debug=True)",
+                "type": "text"
+            }
+        ]
+    }
+]

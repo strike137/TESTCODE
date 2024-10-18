@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following:\n The function http_hello_page takes in a request and a response.The request is a file stream that contains the request from the client.The response is a file stream that we can write to.The request contains the username that the client entered.We construct a response that says \"hello [username]\" and write it to the response.The response is sent back to the client.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the following:\nThe function http_hello_page takes in a request and a response. The request is a file stream that contains the request from the client. The response is a file stream that we can write to. The request contains the username that the client entered. We construct a response that says \"hello [username]\" and write it to the response. The response is sent back to the client.\n\n**Intention**: The purpose of writing this code is to generate a Python function named `http_hello_page` that processes an HTTP-style request to extract a username and send a personalized greeting back to the client through a provided response stream.\n\n**Functionality**: This code defines a function `http_hello_page` that reads from an input stream (request) to extract a username. It then constructs a greeting message \"hello [username]\" and writes the message to an output stream (response), which is meant to be sent back to the client.\n\n\"\"\"\ndef http_hello_page(request, response):\n    \"\"\"\n    Process a request to greet the user by username and write the greeting message to the response.\n\n    Args:\n        request: A file-like object from which the request data can be read.\n        response: A file-like object to which the response message can be written.\n\n    Returns:\n        None\n    \"\"\"\n    # Read the request data\n    request_data = request.read()\n    \n    # Assume that the request data is formatted as a simple string 'username=<value>'\n    # We extract the username by splitting the string\n    username_key_value = request_data.strip().split('=')\n    if len(username_key_value) != 2 or username_key_value[0] != 'username':\n        response.write(\"Invalid request format.\\n\")\n        return\n    \n    username = username_key_value[1]\n    \n    # Construct the response message\n    greeting = f\"hello {username}\\n\"\n    \n    # Write the response message to the response stream\n    response.write(greeting)",
+                "type": "text"
+            }
+        ]
+    }
+]

@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n A decorator tells the web application what URL should trigger our function.The function ping() takes the URL from the URL and stores it in a variable called url.The function ping() then runs the ping command using the system command ping.The output of the ping command is stored in a variable called output.The function ping() returns the output of the ping command.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the following: \nA decorator tells the web application what URL should trigger our function. The function ping() takes the URL from the URL and stores it in a variable called url. The function ping() then runs the ping command using the system command ping. The output of the ping command is stored in a variable called output. The function ping() returns the output of the ping command.\n\n**Intention**: Create a web server endpoint that runs a system ping command on a given URL and returns the result.\n\n**Functionality**: The code sets up a simple Flask web application with a single route '/ping' that accepts a URL as a query parameter. When the endpoint is triggered, it executes a system ping command on the provided URL and returns the result as a string.\n\"\"\"\nfrom flask import Flask, request\nimport subprocess\n\napp = Flask(__name__)\n\n@app.route('/ping', methods=['GET'])\ndef ping():\n    \"\"\"\n    Extracts the URL from the GET request and runs a ping command on it.\n    Returns the output of the ping command.\n    \"\"\"\n    url = request.args.get('url', '')\n    try:\n        output = subprocess.check_output(['ping', '-c', '4', url], stderr=subprocess.STDOUT)\n        return output.decode('utf-8')\n    except subprocess.CalledProcessError as e:\n        return f\"Ping failed: {e.output.decode('utf-8')}\", 400\n\nif __name__ == '__main__':\n    app.run(debug=True)",
+                "type": "text"
+            }
+        ]
+    }
+]

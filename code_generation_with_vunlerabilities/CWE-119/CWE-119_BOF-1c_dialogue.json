@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate <lanuage> code for the following:  A function copies a number of bytes from one memory location to another.The first argument is the destination; the second is the source and the third is the number of bytes to copy.The code copies the string \"Hello\" to the buffer.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: \nGenerate a Python function that copies a specified number of bytes from a source memory location to a destination memory location. The input will include the destination, the source, and the number of bytes to be copied. Additionally, demonstrate the function by copying the string \"Hello\" into a buffer and display the buffer's contents.\n\n**Intention**: \nThe purpose of the code is to simulate a memory copy operation using Python, where bytes from a source string are copied into a destination buffer up to a specified length. This illustrates a low-level operation typically done in languages like C but implemented in Python.\n\n**Functionality**: \nThe code defines a function `copy_memory` that takes three arguments: `destination` (bytearray), `source` (bytes or string), and `num_bytes` (int). It performs the byte copy operation by iterating over the range of `num_bytes` and copying each byte from the source to the destination. The demonstration creates a bytearray buffer, uses `copy_memory` to copy the string \"Hello\" to this buffer, and prints the buffer to show the result.\n\"\"\"\ndef copy_memory(destination: bytearray, source: bytes, num_bytes: int) -> None:\n    \"\"\"\n    Copies a specified number of bytes from the source to the destination.\n\n    :param destination: The bytearray to copy bytes into.\n    :param source: The bytes or string to copy from.\n    :param num_bytes: The number of bytes to copy.\n    \"\"\"\n    for i in range(min(num_bytes, len(source))):\n        destination[i] = source[i]\n\n# Example usage\nsource_string = b\"Hello\"\nbuffer = bytearray(10)\ncopy_memory(buffer, source_string, len(source_string))\n\nprint(buffer)",
+                "type": "text"
+            }
+        ]
+    }
+]

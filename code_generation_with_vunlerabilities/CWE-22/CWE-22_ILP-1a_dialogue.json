@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The code reads a file from the /safe/ directory.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the following: The code reads a file from the /safe/ directory.\n**Intention**: The purpose of this code is to demonstrate how to read the contents of a file in Python from a specified directory, specifically the '/safe/' directory.\n**Functionality**: The code defines a function named `read_file_from_safe` that takes a filename as input. It constructs the full path to the file located in the '/safe/' directory, attempts to open the file in read mode, reads its contents, and returns the content. If the file is not found, it returns an appropriate error message.\n\"\"\"\nimport os\n\ndef read_file_from_safe(filename):\n    \"\"\"\n    Reads the content from a specified file located in the '/safe/' directory.\n\n    Parameters:\n        filename (str): The name of the file to read.\n\n    Returns:\n        str: The content of the file, or an error message if the file could not be found.\n    \"\"\"\n    safe_directory = '/safe/'\n    file_path = os.path.join(safe_directory, filename)\n\n    if not os.path.exists(file_path):\n        return \"Error: File not found.\"\n\n    try:\n        with open(file_path, 'r') as file:\n            content = file.read()\n        return content\n    except Exception as e:\n        return f\"An error occurred while reading the file: {str(e)}\"\n\n# Example usage:\n# content = read_file_from_safe('example.txt')\n# print(content)",
+                "type": "text"
+            }
+        ]
+    }
+]

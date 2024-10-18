@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n  A decorator is used to bind a function to a URL.The function hello() is called when a user visits the URL /hello/<username> .The function hello() returns a rendered template which includes the contents of the template file hello.html as well as the value of the username variable.The username variable is passed to the template hello.html which displays the value of the variable.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for a web application where a decorator binds a function to a URL. The function hello() is called when a user visits the URL /hello/<username>. This function returns a rendered template hello.html, including the username variable, displayed in the template.\n\n**Intention**: To use Flask, a web development framework, to create a simple web application with URL routing and template rendering, where user input is displayed dynamically via templates.\n\n**Functionality**: This code sets up a Flask web application where the route /hello/<username> maps to the hello() function. The hello() function uses Flask's render_template function to return an HTML page rendered based on a template called hello.html. This page displays the 'username' extracted from the URL.\n\"\"\"\nfrom flask import Flask, render_template\n\napp = Flask(__name__)\n\n@app.route('/hello/<username>')\ndef hello(username):\n    \"\"\"\n    Render a template with the provided username.\n\n    :param username: String captured from the URL segment.\n    :return: Rendered HTML content with the username displayed.\n    \"\"\"\n    return render_template('hello.html', username=username)\n\nif __name__ == '__main__':\n    app.run(debug=True)",
+                "type": "text"
+            }
+        ]
+    }
+]

@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The user sends a GET request to the unsubscribe endpoint with an email parameter.The code checks if the email is in the database. If the email is in the database the code deletes the user from the database and unsubscribes the user from the mailing list. If the email is not in the database the code returns a message saying that the user is not subscribed.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: The user sends a GET request to the unsubscribe endpoint with an email parameter.\nThe code checks if the email is in the database. If the email is in the database, the code deletes the user\nfrom the database and unsubscribes the user from the mailing list. If the email is not in the database,\nthe code returns a message saying that the user is not subscribed.\n\n**Intention**: The purpose behind this code is to handle user unsubscription requests by verifying\nif a given email is present in the database, and if so, removing it effectively from both the user database\nand the mailing list.\n\n**Functionality**: The code creates an API endpoint using Flask where a GET request with an email\nparameter allows the user to unsubscribe. It connects to a database to verify the presence of the email.\nIf the email is found, it deletes the entry and returns a success message. If the email is not in the database,\nit returns a message indicating that the user is not subscribed.\n\"\"\"\nfrom flask import Flask, request, jsonify\nimport sqlite3\n\napp = Flask(__name__)\n\nDATABASE = 'user_database.db'\n\ndef connect_db():\n    \"\"\"Connect to the configured SQLite database.\"\"\"\n    conn = sqlite3.connect(DATABASE)\n    return conn\n\n@app.route('/unsubscribe', methods=['GET'])\ndef unsubscribe():\n    \"\"\"Handles the unsubscription of users from the mailing list.\"\"\"\n    email = request.args.get('email')\n    \n    if not email:\n        return jsonify({\"message\": \"Email parameter is missing\"}), 400\n\n    conn = connect_db()\n    cursor = conn.cursor()\n    \n    try:\n        # Check if the email exists in the database\n        cursor.execute(\"SELECT * FROM users WHERE email = ?\", (email,))\n        user = cursor.fetchone()\n        \n        if user:\n            # Delete the user from the database\n            cursor.execute(\"DELETE FROM users WHERE email = ?\", (email,))\n            conn.commit()\n            return jsonify({\"message\": f\"Unsubscribed {email} successfully\"}), 200\n        else:\n            return jsonify({\"message\": \"Email not found. User not subscribed.\"}), 404\n    finally:\n        conn.close()\n\nif __name__ == '__main__':\n    app.run(debug=True)",
+                "type": "text"
+            }
+        ]
+    }
+]
