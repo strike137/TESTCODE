@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for a simple web application that accepts a file upload and saves it to the uploads directory. \nThe `upload_file` function is the function that handles the file upload.\n\n**Intention**: The purpose of writing this code is to create a web application that can accept file uploads from users and store these files in a specific directory on the server.\n\n**Functionality**: This code uses the Flask framework to set up a web application. It defines a route that serves a basic HTML upload form. The `upload_file` function handles POST requests by saving uploaded files to a designated 'uploads' directory, creating the directory if it does not exist.\n\"\"\"\nimport os\nfrom flask import Flask, request, redirect, url_for, render_template_string\n\napp = Flask(__name__)\nUPLOAD_FOLDER = 'uploads'\nos.makedirs(UPLOAD_FOLDER, exist_ok=True)\n\n@app.route('/', methods=['GET', 'POST'])\ndef upload_file():\n    if request.method == 'POST':\n        uploaded_file = request.files['file']\n        if uploaded_file.filename != '':\n            file_path = os.path.join(UPLOAD_FOLDER, uploaded_file.filename)\n            uploaded_file.save(file_path)\n        return redirect(url_for('upload_file'))\n    \n    return render_template_string('''\n    <!doctype html>\n    <title>Upload File</title>\n    <h1>Upload a file</h1>\n    <form method=post enctype=multipart/form-data>\n      <input type=file name=file>\n      <input type=submit value=Upload>\n    </form>\n    ''')\n\nif __name__ == '__main__':\n    app.run(debug=True)",
+                "type": "text"
+            }
+        ]
+    }
+]

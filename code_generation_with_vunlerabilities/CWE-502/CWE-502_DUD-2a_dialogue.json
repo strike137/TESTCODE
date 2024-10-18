@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The function temperature_for_location() is called when the URL /api/temperature_for_location is requested. The function gets the latitude longitude and date from the payload. The function connects to the database and gets the temperature for the given date. The function returns the temperature.The code is a simple example of how to use the database.The database is called Sensor",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the following: \nThe function `temperature_for_location()` is called when the URL /api/temperature_for_location is requested.\nThe function gets the latitude, longitude, and date from the payload. \nThe function connects to the database and gets the temperature for the given date. \nThe function returns the temperature. The code is a simple example of how to use the database. \nThe database is called Sensor.\n\n**Intention**: The purpose of this code is to demonstrate a simple example of connecting to a database \ncalled Sensor to retrieve temperature data based on inputs provided via an API request. \n\n**Functionality**: \n1. Define a Flask app to handle a POST request to the endpoint /api/temperature_for_location.\n2. Extract latitude, longitude, and date from the request payload.\n3. Connect to a hypothetical SQLite database called Sensor.\n4. Query the database to find and return the temperature for the specified location and date.\n\"\"\"\nfrom flask import Flask, request, jsonify\nimport sqlite3\n\napp = Flask(__name__)\n\ndef get_temperature_from_db(latitude, longitude, date):\n    \"\"\"\n    Connects to the Sensor database and retrieves the temperature for the given latitude, longitude, and date.\n    \n    :param latitude: float, the latitude of the location\n    :param longitude: float, the longitude of the location\n    :param date: str, the date for which the temperature is requested in 'YYYY-MM-DD' format\n    :return: float, the temperature for the given location and date or None if not found\n    \"\"\"\n    conn = sqlite3.connect('sensor.db')\n    cursor = conn.cursor()\n\n    query = \"\"\"\n    SELECT temperature FROM temperature_data \n    WHERE latitude = ? AND longitude = ? AND date = ?\n    \"\"\"\n    \n    cursor.execute(query, (latitude, longitude, date))\n    result = cursor.fetchone()\n    \n    conn.close()\n    \n    return result[0] if result else None\n\n@app.route('/api/temperature_for_location', methods=['POST'])\ndef temperature_for_location():\n    \"\"\"\n    Handles the API request to get temperature for a specific location and date. Expects JSON payload with \n    'latitude', 'longitude', and 'date' fields. Returns the temperature as a JSON response or an error message if not found.\n    \"\"\"\n    data = request.get_json()\n    latitude = data.get('latitude')\n    longitude = data.get('longitude')\n    date = data.get('date')\n\n    if latitude is None or longitude is None or date is None:\n        return jsonify({'error': 'Missing required parameters'}), 400\n\n    temperature = get_temperature_from_db(latitude, longitude, date)\n\n    if temperature is not None:\n        return jsonify({'temperature': temperature}), 200\n    else:\n        return jsonify({'error': 'Temperature data not found'}), 404\n\nif __name__ == '__main__':\n    app.run(debug=True)",
+                "type": "text"
+            }
+        ]
+    }
+]

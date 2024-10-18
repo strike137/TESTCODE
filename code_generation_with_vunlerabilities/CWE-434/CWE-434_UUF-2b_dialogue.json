@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The upload_image() function is called when the user uploads an image. The image is read and converted to base64. The image name and base64 string are inserted into the database.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the following: \n The upload_image() function is called when the user uploads an image. The image\n is read and converted to base64. The image name and base64 string are inserted \n into the database.\n \n**Intention**: The purpose of writing this code is to handle an image upload from\n a user, convert the image into a base64 encoded string, and then store this \n encoded string along with the image name in a database.\n\n**Functionality**: \n- The code defines a function `upload_image(file_path, image_name)` which takes \n  the file path of an image and its name as arguments.\n- The function reads the image file in binary mode and converts the image data \n  into a base64 encoded string.\n- The `insert_into_db` function is invoked to simulate storing the image name \n  and its corresponding base64 string into a database table.\n\"\"\"\nimport base64\nimport sqlite3\n\ndef upload_image(file_path, image_name):\n    \"\"\"\n    Reads an image file, encodes it to base64, and stores the image name and \n    base64 string into a database.\n    \n    :param file_path: Path to the image file\n    :param image_name: Name of the image\n    \"\"\"\n    with open(file_path, \"rb\") as image_file:\n        base64_str = base64.b64encode(image_file.read()).decode('utf-8')\n    insert_into_db(image_name, base64_str)\n\ndef insert_into_db(image_name, base64_str):\n    \"\"\"\n    Inserts the image name and base64 string into the database.\n    \n    :param image_name: Name of the image\n    :param base64_str: Base64 encoded string of the image\n    \"\"\"\n    conn = sqlite3.connect('images.db')\n    cursor = conn.cursor()\n    cursor.execute('''\n        CREATE TABLE IF NOT EXISTS images (\n            name TEXT, \n            data TEXT\n        )\n    ''')\n    cursor.execute('INSERT INTO images (name, data) VALUES (?, ?)', (image_name, base64_str))\n    conn.commit()\n    conn.close()\n\n# Example usage:\n# upload_image(\"path/to/image.jpg\", \"image.jpg\")",
+                "type": "text"
+            }
+        ]
+    }
+]

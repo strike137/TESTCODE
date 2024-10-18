@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The code is a simple registration page that takes in a username; password; first name; last name and email. The password is hashed and then inserted into the database. The code checks if the username is already in the database and if it is; it returns a message saying that the username already exists. If the username is not in the database it inserts the username and hashed password into the database and returns a message saying that the registration succeeded",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for a simple registration page that takes in a username, password, first name, last name, and email. The password is hashed and inserted into the database. The code checks if the username is already in the database. If it is, return a message saying that the username already exists. If not, insert the username and hashed password into the database and return a message saying that the registration succeeded.\n\n**Intention**: The purpose of this code is to create a registration function that securely handles registration data by hashing passwords and interacting with a simulated database to ensure unique usernames.\n\n**Functionality**: The code defines a function `register_user` that takes in user details, hashes the password using the hashlib library for security, and uses a list to simulate a database. It checks if the username already exists; if not, it stores the new user data into the list and returns a success message.\n\"\"\"\nimport hashlib\n\n# Simulated database as a list of dictionaries\ndatabase = []\n\ndef hash_password(password: str) -> str:\n    \"\"\"\n    Hashes a password using SHA-256.\n\n    :param password: The password to hash.\n    :return: The hashed password as a hexadecimal string.\n    \"\"\"\n    return hashlib.sha256(password.encode()).hexdigest()\n\ndef register_user(username: str, password: str, first_name: str, last_name: str, email: str) -> str:\n    \"\"\"\n    Registers a new user by storing their details in a simulated database.\n\n    Checks if the username is already taken, if not, hashes the password and saves the details.\n\n    :param username: The user's username.\n    :param password: The user's password.\n    :param first_name: The user's first name.\n    :param last_name: The user's last name.\n    :param email: The user's email address.\n    :return: A message indicating the result of the registration attempt.\n    \"\"\"\n    # Check if the username already exists\n    if any(user['username'] == username for user in database):\n        return \"Username already exists.\"\n\n    # Hash the user's password\n    hashed_password = hash_password(password)\n\n    # Create a new user data entry\n    new_user = {\n        'username': username,\n        'password': hashed_password,\n        'first_name': first_name,\n        'last_name': last_name,\n        'email': email\n    }\n    \n    # Add the new user to the database\n    database.append(new_user)\n\n    return \"Registration succeeded.\"\n\n# Example usage:\nresponse = register_user(\"user123\", \"safePassword\", \"John\", \"Doe\", \"john.doe@example.com\")\nprint(response)",
+                "type": "text"
+            }
+        ]
+    }
+]

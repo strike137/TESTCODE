@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The code is a simple web application that allows users to upload files to the server.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for a simple web application that allows users to upload files to the server.\n**Intention**: The purpose of this code is to create a basic web application with a file upload feature.\n**Functionality**: This script utilizes Flask, a micro web framework, to create a web server that listens for HTTP requests.\nThe application includes a form on the main page where users can select and upload a file. When the file is submitted,\nit is saved on the server in the 'uploads' directory.\n\"\"\"\nfrom flask import Flask, request, redirect, url_for, render_template\nimport os\n\napp = Flask(__name__)\nUPLOAD_FOLDER = 'uploads'\nALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}\napp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\n\ndef allowed_file(filename):\n    \"\"\"Check if a file is allowed for uploading based on its extension.\"\"\"\n    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS\n\n@app.route('/', methods=['GET', 'POST'])\ndef upload_file():\n    \"\"\"Render the file upload form and handle file uploads.\"\"\"\n    if request.method == 'POST':\n        if 'file' not in request.files:\n            return redirect(request.url)\n        file = request.files['file']\n        if file.filename == '':\n            return redirect(request.url)\n        if file and allowed_file(file.filename):\n            filename = file.filename\n            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))\n            return 'File uploaded successfully'\n    return '''\n    <!doctype html>\n    <title>Upload a File</title>\n    <h1>Upload a new File</h1>\n    <form method=post enctype=multipart/form-data>\n      <input type=file name=file>\n      <input type=submit value=Upload>\n    </form>\n    '''\n\nif __name__ == '__main__':\n    os.makedirs(UPLOAD_FOLDER, exist_ok=True)\n    app.run(debug=True)",
+                "type": "text"
+            }
+        ]
+    }
+]

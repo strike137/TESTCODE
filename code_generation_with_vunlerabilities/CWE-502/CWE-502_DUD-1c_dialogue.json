@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The code is a simple web application that listens on port 5000.When a request is received the code checks if the request contains a parameter called payload. If not it returns an error message.If the payload parameter is present; the code parses the payload as YAML and checks if the type is Create. If it is it returns an error message.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for a simple web application. The application listens on port 5000. It checks incoming requests for a parameter called 'payload'. If the parameter is missing, the application returns an error message. If 'payload' is present, it parses it as YAML and checks if the 'type' is 'Create'. If 'type' is 'Create', it returns an error message.\n\n**Intention**: The purpose of this code is to implement a basic web service that processes incoming HTTP requests by checking for and analyzing a YAML payload, and returning appropriate responses based on specific conditions.\n\n**Functionality**: The code creates a Flask web application that listens on the specified port. It processes incoming GET requests, verifies the existence of the 'payload' parameter, parses the payload to a YAML format, checks if the 'type' key in the parsed YAML is 'Create', and returns messages depending on these conditions.\n\"\"\"\nfrom flask import Flask, request, jsonify\nimport yaml\n\napp = Flask(__name__)\n\n@app.route('/', methods=['GET'])\ndef process_request():\n    payload = request.args.get('payload')\n    if not payload:\n        return jsonify({\"error\": \"Payload parameter missing\"}), 400\n\n    try:\n        data = yaml.safe_load(payload)\n    except yaml.YAMLError:\n        return jsonify({\"error\": \"Invalid YAML format\"}), 400\n\n    if data.get('type') == 'Create':\n        return jsonify({\"error\": \"Type 'Create' is not allowed\"}), 400\n\n    return jsonify({\"success\": \"Request processed successfully\"})\n\nif __name__ == '__main__':\n    app.run(port=5000)",
+                "type": "text"
+            }
+        ]
+    }
+]

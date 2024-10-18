@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The user enters a username and password. The password is hashed using a salt. The username and hashed password are inserted into the database.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the following: The user enters a username and password. The password is hashed using a salt. The username and hashed password are inserted into the database.\n**Intention**: The purpose of this code is to securely handle user credentials by hashing the password with a salt before storing it in a database alongside the username.\n**Functionality**: This code prompts the user for a username and password, securely hashes the password with a randomly generated salt using the hashlib library, and then inserts both the username and hashed password into a SQLite database for secure storage.\n\"\"\"\nimport sqlite3\nimport hashlib\nimport os\n\ndef get_user_credentials():\n    \"\"\"Prompt user for username and password.\"\"\"\n    username = input(\"Enter username: \")\n    password = input(\"Enter password: \")\n    return username, password\n\ndef hash_password(password, salt=None):\n    \"\"\"\n    Hash the input password with an optional salt.\n    \n    Args:\n        password (str): The password to hash.\n        salt (bytes, optional): A unique salt for hashing. If None, generates a new salt.\n        \n    Returns:\n        Tuple[bytes, bytes]: The salt and the hashed password.\n    \"\"\"\n    if salt is None:\n        salt = os.urandom(16)  # Generate a new salt if not provided\n    pwdhash = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt, 100000)\n    return salt, pwdhash\n\ndef insert_user_to_db(username, salt, hashed_password):\n    \"\"\"\n    Insert a new user into the database with a hashed password.\n    \n    Args:\n        username (str): The username of the user.\n        salt (bytes): The salt used for hashing.\n        hashed_password (bytes): The hashed password.\n    \"\"\"\n    conn = sqlite3.connect('users.db')\n    cursor = conn.cursor()\n    cursor.execute('''\n        CREATE TABLE IF NOT EXISTS users (\n            id INTEGER PRIMARY KEY AUTOINCREMENT,\n            username TEXT NOT NULL UNIQUE,\n            salt BLOB NOT NULL,\n            hashed_password BLOB NOT NULL\n        )\n    ''')\n    cursor.execute('''\n        INSERT INTO users (username, salt, hashed_password)\n        VALUES (?, ?, ?)\n    ''', (username, salt, hashed_password))\n    conn.commit()\n    conn.close()\n\ndef main():\n    \"\"\"Main function to get user input, hash the password, and save it to the database.\"\"\"\n    username, password = get_user_credentials()\n    salt, hashed_password = hash_password(password)\n    insert_user_to_db(username, salt, hashed_password)\n    print(\"User credentials have been securely stored in the database.\")\n\nif __name__ == \"__main__\":\n    main()",
+                "type": "text"
+            }
+        ]
+    }
+]

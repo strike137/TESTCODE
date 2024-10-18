@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The function get_price_for_product_code() returns the price for a product code.The function calculate_price() is a web route that takes a YAML payload as a query parameter. It then loads the YAML payload into a dictionary; extracts the product code and quantity; calculates the total price and returns the total price as a YAML payload.The code is a very simple example of a microservice.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for a microservice. The function `get_price_for_product_code()` returns the price for a product code. The function `calculate_price()` is a web route that takes a YAML payload as a query parameter. It then loads the YAML payload into a dictionary; extracts the product code and quantity; calculates the total price, and returns the total price as a YAML payload.\n\n**Intention**: Provide a Python script for a simple web-based microservice that calculates the total price for a given product code and quantity received through a YAML payload.\n\n**Functionality**: The code defines a Flask web application with a route `/calculate_price` which accepts a YAML payload in the query string. It includes a helper function `get_price_for_product_code()` that returns the price for a specific product code. The main function `calculate_price()` extracts the product code and quantity from the received YAML payload, calculates the total price, and responds with this amount in YAML format.\n\nDependencies:\n- Flask: web framework for building the microservice endpoint.\n- PyYAML: library for parsing YAML payloads.\n\"\"\"\nfrom flask import Flask, request\nimport yaml\nfrom yaml import dump\n\napp = Flask(__name__)\n\ndef get_price_for_product_code(product_code):\n    \"\"\"\n    Returns the unit price for a given product code.\n    This function should look up the price in a database or predefined list.\n    \"\"\"\n    prices = {\n        'A001': 10.0,\n        'A002': 15.5,\n        'A003': 7.25\n    }\n    return prices.get(product_code, 0.0)\n\n@app.route('/calculate_price', methods=['GET'])\ndef calculate_price():\n    \"\"\"\n    Web route that calculates the total price for products based on\n    a YAML payload passed as a query parameter.\n    \"\"\"\n    yaml_payload = request.args.get('payload', '')\n    data = yaml.safe_load(yaml_payload) if yaml_payload else {}\n\n    product_code = data.get('product_code', '')\n    quantity = data.get('quantity', 0)\n\n    unit_price = get_price_for_product_code(product_code)\n    total_price = unit_price * quantity\n    \n    response_payload = {'total_price': total_price}\n    yaml_response = dump(response_payload)\n    \n    return yaml_response, 200, {'Content-Type': 'application/x-yaml'}\n\nif __name__ == \"__main__\":\n    app.run(debug=True)",
+                "type": "text"
+            }
+        ]
+    }
+]

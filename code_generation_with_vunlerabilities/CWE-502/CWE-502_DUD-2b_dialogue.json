@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The code is a web application that listens for HTTP requests on the /api/temperature_for_location endpoint. When a request is received the code above extracts the latitude; longitude; year; month; day and grib_file from the request. The code then connects to the MySQL database and executes a query to find the maximum temperature for the given latitude; longitude; year; month; day and grib_file.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for a web application listening for HTTP requests on the /api/temperature_for_location endpoint.\nIt should extract latitude, longitude, year, month, day, and grib_file from the request, then connect to a MySQL database \nand query the maximum temperature for the specified parameters.\n\n**Intention**: The purpose of this code is to implement a web application that processes HTTP requests to retrieve \ntemperature data based on specified geographical and temporal parameters, using a MySQL database.\n\n**Functionality**: The code sets up a Flask web application with an endpoint /api/temperature_for_location. \nIt extracts parameters such as latitude, longitude, year, month, day, and grib_file from the incoming request. \nIt connects to a MySQL database using the extracted parameters to query and return the maximum temperature value.\n\"\"\"\nfrom flask import Flask, request, jsonify\nimport mysql.connector\nfrom mysql.connector import Error\n\napp = Flask(__name__)\n\ndef get_database_connection():\n    \"\"\"\n    Establishes and returns a connection to the MySQL database.\n    \"\"\"\n    try:\n        connection = mysql.connector.connect(\n            host='localhost',\n            database='temperature_db',\n            user='temperature_user',\n            password='your_password'\n        )\n        return connection\n    except Error as e:\n        print(f\"Error connecting to MySQL database: {e}\")\n        return None\n\n@app.route('/api/temperature_for_location', methods=['GET'])\ndef temperature_for_location():\n    \"\"\"\n    Handles GET requests to the /api/temperature_for_location endpoint.\n    Extracts parameters and queries the database for the maximum temperature.\n    \"\"\"\n    try:\n        latitude = request.args.get('latitude', type=float)\n        longitude = request.args.get('longitude', type=float)\n        year = request.args.get('year', type=int)\n        month = request.args.get('month', type=int)\n        day = request.args.get('day', type=int)\n        grib_file = request.args.get('grib_file', type=str)\n\n        connection = get_database_connection()\n        if connection is None:\n            return jsonify({\"error\": \"Failed to connect to the database\"}), 500\n\n        cursor = connection.cursor()\n        query = \"\"\"\n        SELECT MAX(temperature) \n        FROM temperature_data\n        WHERE latitude = %s AND longitude = %s AND year = %s AND month = %s AND day = %s AND grib_file = %s\n        \"\"\"\n        cursor.execute(query, (latitude, longitude, year, month, day, grib_file))\n        result = cursor.fetchone()\n        cursor.close()\n        connection.close()\n\n        if result[0] is not None:\n            return jsonify({\"max_temperature\": result[0]}), 200\n        else:\n            return jsonify({\"error\": \"No data found for the specified parameters\"}), 404\n    \n    except Exception as e:\n        return jsonify({\"error\": str(e)}), 500\n\nif __name__ == '__main__':\n    app.run(debug=True)",
+                "type": "text"
+            }
+        ]
+    }
+]

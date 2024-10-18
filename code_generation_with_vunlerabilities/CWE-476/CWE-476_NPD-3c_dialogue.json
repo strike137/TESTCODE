@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n Memory allocation method allocates a buffer of 1024 bytes.Another function reads 10 characters from sstandard inout and stores them in buf",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code that includes a method for memory allocation to create a buffer of 1024 bytes \nand another function to read 10 characters from standard input and stores them in the buffer.\n**Intention**: The purpose of this code is to demonstrate how to allocate a memory buffer of a fixed size and populate it \nwith input from a user.\n**Functionality**: The code defines a function to allocate a 1024-byte buffer and another function to read exactly 10 \ncharacters from the standard input, writing them into the allocated buffer. It manages the buffer size to ensure \nit does not exceed the allocated memory.\n\"\"\"\ndef allocate_buffer(size: int = 1024) -> bytearray:\n    \"\"\"\n    Allocate a buffer of the given size.\n    \n    :param size: The size of the buffer to allocate, default is 1024 bytes.\n    :return: A bytearray buffer of the specified size.\n    \"\"\"\n    return bytearray(size)\n\ndef read_into_buffer(buffer: bytearray, read_size: int = 10) -> None:\n    \"\"\"\n    Read a specific number of characters from standard input and store them in the buffer.\n    \n    :param buffer: The bytearray buffer to store the characters.\n    :param read_size: The number of characters to read from input, default is 10.\n    \"\"\"\n    input_data = input(\"Enter at least 10 characters: \")[:read_size]\n    buffer[:len(input_data)] = input_data.encode('utf-8')\n\ndef main():\n    buffer = allocate_buffer()\n    read_into_buffer(buffer)\n    print(\"Buffer Contents:\", buffer[:10].decode('utf-8'))\n\nif __name__ == \"__main__\":\n    main()",
+                "type": "text"
+            }
+        ]
+    }
+]

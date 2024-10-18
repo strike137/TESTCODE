@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n It creates a web app. It defines a function that returns the price for a product code. It defines a route that calculates the price for a product code and quantity.The code is a simple web app.The app will be running on port 5000.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for a web app that includes a function for retrieving product prices based on product code and a route that calculates the total price given a product code and quantity. The app will run on port 5000.\n**Intention**: The purpose of this code is to create a simple web application that provides functionality to calculate the total price of a product based on its product code and the requested quantity.\n**Functionality**: The code defines a web app using Flask. It includes a function `get_price` that returns the price for a given product code. A Flask route `/calculate_price` is defined to handle requests, retrieve product prices, calculate the total price for the specified quantity, and return the result in JSON format.\n\"\"\"\nfrom flask import Flask, jsonify, request\n\napp = Flask(__name__)\n\n# Example product prices dictionary\nproduct_prices = {\n    'product_a': 10.0,\n    'product_b': 20.0,\n    'product_c': 30.0\n}\n\ndef get_price(product_code):\n    \"\"\"\n    Retrieve the price for the given product code.\n    \n    Args:\n        product_code (str): The product code to retrieve the price for.\n        \n    Returns:\n        float: The price of the product, or None if product code does not exist.\n    \"\"\"\n    return product_prices.get(product_code)\n\n@app.route('/calculate_price', methods=['GET'])\ndef calculate_price():\n    \"\"\"\n    Flask route to calculate the total price of a product based on product code and quantity.\n    \n    Query Parameters:\n        product_code (str): The product code to retrieve the price for.\n        quantity (int): The quantity of the product.\n        \n    Returns:\n        json: A JSON response containing the total price or an error message if the product code is invalid.\n    \"\"\"\n    product_code = request.args.get('product_code')\n    quantity = request.args.get('quantity', type=int)\n    \n    if not product_code or quantity is None:\n        return jsonify({'error': 'Missing product_code or quantity parameter'}), 400\n    \n    price = get_price(product_code)\n    \n    if price is None:\n        return jsonify({'error': 'Invalid product code'}), 404\n    \n    total_price = price * quantity\n    return jsonify({'total_price': total_price})\n\nif __name__ == '__main__':\n    app.run(port=5000)",
+                "type": "text"
+            }
+        ]
+    }
+]

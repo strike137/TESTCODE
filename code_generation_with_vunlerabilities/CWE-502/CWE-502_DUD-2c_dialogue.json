@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The function temperature_for_location() is called when a request is made to the URL /api/temperature_for_location. The function gets the latitude; longitude and date from the request. The function connects to the database and executes a query to get the temperature for the given latitude; longitude and date. The function returns the temperature.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for a function that is called when a request is made to the URL /api/temperature_for_location. The function retrieves latitude, longitude, and date from the request, queries a database for the corresponding temperature, and returns it.\n**Intention**: The purpose of this code is to implement a web API endpoint that fetches and returns temperature data from a database based on specific geographic coordinates and a date.\n**Functionality**: The code defines a Flask application with a route /api/temperature_for_location. It extracts parameters (latitude, longitude, date) from the URL query string, connects to a database, executes an SQL query to retrieve the temperature, and returns it as a JSON response.\n\"\"\"\nfrom flask import Flask, request, jsonify\nimport sqlite3\n\napp = Flask(__name__)\n\ndef query_temperature(lat, lon, date):\n    \"\"\"\n    Queries the database for temperature data based on latitude, longitude, and date.\n\n    :param lat: Latitude of the location\n    :param lon: Longitude of the location\n    :param date: Date of the required temperature\n    :return: Temperature as a float\n    \"\"\"\n    connection = sqlite3.connect('weather_data.db')\n    cursor = connection.cursor()\n    cursor.execute(\"\"\"\n        SELECT temperature FROM weather\n        WHERE latitude = ? AND longitude = ? AND date = ?\n    \"\"\", (lat, lon, date))\n    result = cursor.fetchone()\n    connection.close()\n    return result[0] if result else None\n\n@app.route('/api/temperature_for_location', methods=['GET'])\ndef temperature_for_location():\n    \"\"\"\n    Handles the request for temperature based on latitude, longitude, and date.\n\n    :return: JSON response with the temperature or an error message\n    \"\"\"\n    lat = request.args.get('latitude', type=float)\n    lon = request.args.get('longitude', type=float)\n    date = request.args.get('date')\n\n    if lat is None or lon is None or date is None:\n        return jsonify({'error': 'Missing latitude, longitude, or date'}), 400\n\n    temperature = query_temperature(lat, lon, date)\n\n    if temperature is not None:\n        return jsonify({'temperature': temperature})\n    else:\n        return jsonify({'error': 'No data found'}), 404\n\nif __name__ == '__main__':\n    app.run(debug=True)",
+                "type": "text"
+            }
+        ]
+    }
+]

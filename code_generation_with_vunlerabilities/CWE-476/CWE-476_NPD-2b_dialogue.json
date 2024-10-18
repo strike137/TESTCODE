@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to \"John\".",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for memory allocation method to allocate a block of memory of the specified size \nand return a pointer to the beginning of the block. The code creates a new person and sets the status to 0 and the \nname to \"John\".\n\n**Intention**: The purpose of this code is to simulate memory allocation in Python to create a new 'Person' structure, \ninitialize it, and set its attributes (`status` and `name`) according to the specified requirements.\n\n**Functionality**: The code defines a `Person` class to emulate a structure with attributes `status` and `name`. \nIt creates an instance of `Person`, initializes the `status` to 0, and `name` to \"John\". Since Python manages memory \nautomatically, this code abstracts the concept of memory allocation and directly works with the high-level constructs \nprovided by Python.\n\"\"\"\nclass Person:\n    def __init__(self, name: str = \"John\", status: int = 0):\n        self.name = name\n        self.status = status\n\ndef allocate_person() -> Person:\n    \"\"\"\n    Allocates a new Person and sets the default values.\n\n    Returns:\n        Person: A newly created Person instance with default values set.\n    \"\"\"\n    new_person = Person()\n    return new_person\n\nif __name__ == \"__main__\":\n    person = allocate_person()\n    print(f\"Name: {person.name}, Status: {person.status}\")",
+                "type": "text"
+            }
+        ]
+    }
+]

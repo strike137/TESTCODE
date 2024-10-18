@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The calculate_price function is the entry point for the API.It receives a YAML payload as a query parameter.It parses the YAML payload and extracts the product_code and quantity.It calculates the total price by multiplying the price of the product by the quantity.It returns the total price as a string.The code is a very simple example of a web API.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for a simple web API that includes a calculate_price function. This function should receive a YAML payload as a query parameter, parse the payload to extract the product_code and quantity, calculate the price by multiplying the product's unit price by the quantity, and return the total price as a string.\n\n**Intention**: The purpose of this code is to demonstrate how to create a basic web API in Python that processes a YAML payload to calculate and return a total price based on input parameters.\n\n**Functionality**: The code uses the Flask framework to create a simple web API with an endpoint that accepts GET requests. The endpoint reads YAML data from a query parameter, extracts necessary information, performs calculations, and returns results. The `pyyaml` package is used to handle YAML parsing, and a dictionary simulates product pricing data. The code calculates the total price based on parsed data and responds with the computed value as a string.\n\"\"\"\nfrom flask import Flask, request\nimport yaml\n\napp = Flask(__name__)\n\n# Simulated product pricing data\nPRODUCT_PRICES = {\n    \"A001\": 10.0,  # Product Code A001 costs $10 per unit\n    \"B002\": 20.5,  # Product Code B002 costs $20.5 per unit\n}\n\n@app.route('/calculate_price', methods=['GET'])\ndef calculate_price():\n    \"\"\"\n    Endpoint to calculate total price based on a YAML payload query parameter.\n    \n    Parses `product_code` and `quantity` from the YAML payload, calculates\n    the total price by multiplying unit price by quantity, and returns the\n    total price as a string.\n    \n    Returns:\n        str: Total price as a string.\n    \"\"\"\n    payload = request.args.get('payload')\n    if not payload:\n        return \"Error: Missing YAML payload\", 400\n\n    try:\n        # Parse YAML payload\n        data = yaml.safe_load(payload)\n        product_code = data['product_code']\n        quantity = data['quantity']\n        \n        # Calculate total price\n        unit_price = PRODUCT_PRICES.get(product_code)\n        if unit_price is None:\n            return \"Error: Invalid product code\", 400\n        \n        total_price = unit_price * quantity\n        return str(total_price)\n    except yaml.YAMLError as e:\n        return f\"Error: Failed to parse YAML payload - {e}\", 400\n    except KeyError:\n        return \"Error: Missing required fields in YAML payload\", 400\n    except Exception as e:\n        return f\"Error: {e}\", 500\n\nif __name__ == '__main__':\n    app.run(debug=True)",
+                "type": "text"
+            }
+        ]
+    }
+]

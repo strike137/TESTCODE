@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The code is a simple registration form that takes the username and password from the user and stores it in the database.The password is hashed and a random salt is generated.The salt is appended to the hashed password and stored in the database.The salt is used to verify the password during login.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Create a simple registration form script that takes a username and password as input. The password should be hashed with a randomly generated salt before being stored in a simulated database. During login, the salt should be used to verify the hashed password.\n\n**Intention**: To implement a secure registration and login system where user passwords are safely stored using hashing and salting techniques.\n\n**Functionality**: The script includes functions to register a user by taking their username and password, hashing the password with a generated salt, and storing both the hash and salt. It also includes a function to verify the user's password during login by comparing the stored hash against a newly hashed password with the stored salt.\n\"\"\"\nimport hashlib\nimport os\n\n# Simulated database\ndatabase = {}\n\ndef hash_password(password, salt=None):\n    \"\"\"Hash a password with an optional salt.\"\"\"\n    if salt is None:\n        salt = os.urandom(16)\n    password_hash = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt, 100000)\n    return salt, password_hash\n\ndef register_user(username, password):\n    \"\"\"Register a new user with a username and password.\"\"\"\n    if username in database:\n        raise ValueError(\"Username already exists.\")\n    salt, password_hash = hash_password(password)\n    database[username] = {'salt': salt, 'password_hash': password_hash}\n\ndef verify_user(username, password):\n    \"\"\"Verify a user's password during login.\"\"\"\n    if username not in database:\n        return False\n    user_record = database[username]\n    salt, expected_password_hash = user_record['salt'], user_record['password_hash']\n    _, password_hash = hash_password(password, salt)\n    return password_hash == expected_password_hash\n\n# Example usage\ntry:\n    register_user('user1', 'securepassword123')\n    print(verify_user('user1', 'securepassword123'))  # True\n    print(verify_user('user1', 'wrongpassword'))      # False\nexcept ValueError as ve:\n    print(ve)",
+                "type": "text"
+            }
+        ]
+    }
+]

@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The scan function reads in a string from the standard input. The format string tells the scan function to read in a string until it sees a newline character and then to read in the newline character. The newline character is not stored in the buffer.The scanf function returns the number of characters read in.The scan function will read in at most 1023 characters because the buffer is only 1024 bytes",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for a scan function that reads a string from standard input until a newline character is reached,\nwithout storing the newline character. It should return the number of characters read. The function should read at most 1023 characters.\n\n**Intention**: The purpose of this code is to implement a Python function that mimics the behavior described, ensuring the correct\nbuffer size constraints and returning the number of characters read excluding the newline.\n\n**Functionality**: This code defines the `scan` function, which reads a line from standard input, excludes the newline character,\nand returns the count of the characters read. It ensures the buffer only contains up to 1023 characters at maximum.\n\"\"\"\ndef scan():\n    \"\"\"\n    Reads a string from standard input until a newline character is encountered.\n    The function returns the number of characters read, excluding the newline.\n    \n    Returns:\n        int: Number of characters read.\n    \"\"\"\n    # Read input from the standard input\n    input_data = input()\n    \n    # Truncate to a maximum of 1023 characters\n    input_data = input_data[:1023]\n    \n    # Calculate the number of characters read\n    num_chars = len(input_data)\n    \n    # Return the number of characters read\n    return num_chars\n\n# Example of usage (this line should be removed or commented out for a pure function definition file)\n# print(scan())",
+                "type": "text"
+            }
+        ]
+    }
+]

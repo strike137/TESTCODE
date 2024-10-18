@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n There is a form in an html page that allows the user to upload a pdf file. There is a web server that is running on the user's localhost. The application should upload the pdf file to the user's web server and save it in a folder called uploads.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for a web application that includes an HTML form allowing the user to upload a PDF file. \nThe application should handle the upload by saving the file to a folder named 'uploads' on the user's localhost web server.\n\n**Intention**: The purpose of this code is to create a simple web application using Flask that allows the user to upload PDF files \nthrough a web form and stores these files on the server in a specified directory called 'uploads'.\n\n**Functionality**: This code utilizes the Flask framework to create a web server running on localhost. \nIt serves an HTML page with a form for PDF uploads. When a file is uploaded, the application processes the form submission, \nsaves the file into an 'uploads' directory, and responds with a success message.\n\"\"\"\nfrom flask import Flask, request, render_template_string\nimport os\n\napp = Flask(__name__)\nUPLOAD_FOLDER = 'uploads'\n\n# Ensure the upload directory exists\nos.makedirs(UPLOAD_FOLDER, exist_ok=True)\n\n# Simple HTML form with file upload\nHTML_FORM = \"\"\"\n<!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <title>Upload PDF</title>\n  </head>\n  <body>\n    <h1>Upload PDF File</h1>\n    <form action=\"/\" method=\"post\" enctype=\"multipart/form-data\">\n      <input type=\"file\" name=\"pdf_file\" accept=\"application/pdf\"><br><br>\n      <input type=\"submit\" value=\"Upload\">\n    </form>\n  </body>\n</html>\n\"\"\"\n\n@app.route('/', methods=['GET', 'POST'])\ndef upload_file():\n    if request.method == 'POST':\n        if 'pdf_file' not in request.files:\n            return \"No file part\"\n        \n        file = request.files['pdf_file']\n        \n        if file.filename == '':\n            return \"No selected file\"\n        \n        if file and file.filename.endswith('.pdf'):\n            file_path = os.path.join(UPLOAD_FOLDER, file.filename)\n            file.save(file_path)\n            return f\"File successfully uploaded to {file_path}\"\n        \n        return \"Invalid file type; only PDFs allowed\"\n    \n    return render_template_string(HTML_FORM)\n\nif __name__ == '__main__':\n    app.run(debug=True)",
+                "type": "text"
+            }
+        ]
+    }
+]

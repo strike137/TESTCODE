@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n Create a web application that takes in a payload from a user request and checks for the field 'name'. If the field exists return the content of the field 'name'. ",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the following: Create a web application that takes in \na payload from a user request and checks for the field 'name'. If the field exists, return the \ncontent of the field 'name'.\n\n**Intention**: The purpose of this code is to create a simple web application using Flask that \nprocesses incoming requests, checks for a field named 'name' in the JSON payload, and returns \nthe value of the 'name' field if it is present.\n\n**Functionality**: The code initializes a web server using the Flask framework. It defines a \nsingle POST endpoint `/get-name` that accepts JSON requests. When a request is received, the \nendpoint checks if the JSON payload contains the 'name' field. If 'name' is present, the \nserver responds with the value of the 'name' field; otherwise, it returns an error message.\n\"\"\"\nfrom flask import Flask, request, jsonify\n\napp = Flask(__name__)\n\n@app.route('/get-name', methods=['POST'])\ndef get_name():\n    \"\"\"\n    Handles POST requests to the /get-name endpoint. Checks for the 'name' field in the JSON\n    payload and returns its value, or an error message if 'name' is not found.\n    \"\"\"\n    data = request.get_json()\n    if not data:\n        return jsonify({\"error\": \"No JSON payload provided\"}), 400\n\n    if 'name' in data:\n        return jsonify({\"name\": data['name']}), 200\n    else:\n        return jsonify({\"error\": \"Field 'name' not found\"}), 400\n\nif __name__ == '__main__':\n    app.run(debug=True)",
+                "type": "text"
+            }
+        ]
+    }
+]

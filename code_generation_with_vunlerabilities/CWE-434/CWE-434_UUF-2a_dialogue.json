@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The code is a simple script that accepts an image file and stores it in a MySQL database.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the following:\nThe code is a simple script that accepts an image file and stores it in a MySQL database.\n\n**Intention**: The purpose of this code is to facilitate the process of taking an image file and storing it into a MySQL database table in a straightforward manner.\n\n**Functionality**: The code prompts for an image file, reads the file in binary mode, connects to a MySQL database using provided credentials, and inserts the image into a designated table. It utilizes the MySQL connector for Python to manage these operations.\n\"\"\"\nimport mysql.connector\nfrom mysql.connector import Error\n\ndef insert_image(image_path, host, database, user, password, table_name):\n    \"\"\"\n    Inserts an image into a MySQL database table.\n    \n    :param image_path: Path to the image file to be inserted.\n    :param host: Host of the MySQL database.\n    :param database: Name of the MySQL database.\n    :param user: Username for the MySQL database.\n    :param password: Password for the MySQL database.\n    :param table_name: Name of the table to insert the image into.\n    \"\"\"\n    try:\n        # Read the image file in binary mode\n        with open(image_path, 'rb') as file:\n            binary_data = file.read()\n\n        # Establish a database connection\n        connection = mysql.connector.connect(\n            host=host,\n            database=database,\n            user=user,\n            password=password\n        )\n\n        cursor = connection.cursor()\n        # Prepare the INSERT statement\n        sql_insert_blob_query = f\"\"\"INSERT INTO {table_name} (image) VALUES (%s)\"\"\"\n\n        # Execute the SQL statement\n        cursor.execute(sql_insert_blob_query, (binary_data,))\n        connection.commit()\n        print(\"Image successfully inserted into the database.\")\n\n    except Error as e:\n        print(f\"Error: {e}\")\n\n    finally:\n        if connection.is_connected():\n            cursor.close()\n            connection.close()\n            print(\"MySQL connection is closed.\")\n\n# Example Usage:\n# insert_image('path/to/image.jpg', 'localhost', 'mydatabase', 'myuser', 'mypassword', 'images')",
+                "type": "text"
+            }
+        ]
+    }
+]

@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \nThe upload_file function is the function that handles the upload of the file.The p.save(os.path.join('uploads' filename)) line saves the file to the uploads folder.The uploads folder is created in the same directory as the source file.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the following: \nThe upload_file function is the function that handles the upload of the file. \nThe p.save(os.path.join('uploads', filename)) line saves the file to the uploads folder. \nThe uploads folder is created in the same directory as the source file.\n\n**Intention**: The purpose of this code is to implement a file upload functionality \nwhere a file is saved into a directory named 'uploads'. This folder is created if \nit doesn't exist in the current working directory of the script.\n\n**Functionality**: The script consists of a function `upload_file` that takes a \nfile-like object `p` and a `filename` as input. It first ensures the 'uploads' \ndirectory exists and then saves the file into this directory using the provided \nfilename.\n\"\"\"\nimport os\n\ndef upload_file(p, filename):\n    \"\"\"\n    Handles a file upload by saving the file to the 'uploads' directory.\n\n    :param p: file-like object, the file to be uploaded\n    :param filename: str, the name to save the file as\n    \"\"\"\n    uploads_dir = 'uploads'\n    # Ensure the 'uploads' directory exists\n    if not os.path.exists(uploads_dir):\n        os.makedirs(uploads_dir)\n    \n    # Save the file into the 'uploads' directory\n    file_path = os.path.join(uploads_dir, filename)\n    p.save(file_path)",
+                "type": "text"
+            }
+        ]
+    }
+]

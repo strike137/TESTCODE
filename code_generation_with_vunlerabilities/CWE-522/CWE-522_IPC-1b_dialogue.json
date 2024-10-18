@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The code is a simple registration form that takes the username and password from the user and hashes the password.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for a simple registration form that takes the username and password from the user and hashes the password.\n**Intention**: The purpose of this code is to create a basic user registration form where a user can enter their username and password. The password is then securely hashed and stored.\n**Functionality**: The code prompts the user for a username and password. It then uses a hashing function to hash the password for secure storage. Finally, it prints out the username and the hashed password.\n\"\"\"\nimport hashlib\n\ndef hash_password(password: str) -> str:\n    \"\"\"Hash a password using SHA-256 and return the hexadecimal digest.\"\"\"\n    return hashlib.sha256(password.encode()).hexdigest()\n\ndef register_user():\n    \"\"\"Prompt the user to enter a username and password, then display the hashed password.\"\"\"\n    username = input(\"Enter your username: \")\n    password = input(\"Enter your password: \")\n    hashed_password = hash_password(password)\n    print(f\"Username: {username}\")\n    print(f\"Hashed Password: {hashed_password}\")\n\nif __name__ == \"__main__\":\n    register_user()",
+                "type": "text"
+            }
+        ]
+    }
+]

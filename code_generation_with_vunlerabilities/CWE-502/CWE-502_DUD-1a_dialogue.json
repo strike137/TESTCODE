@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n It creates a web app. It creates a route called /api. It gets the payload parameter from the URL. It loads the payload into a dictionary. It returns the name value from the dictionary.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code that creates a web app with a route called /api, retrieves a 'payload' parameter from the URL, loads it into a dictionary, and returns the 'name' value from the dictionary.\n**Intention**: To build a simple web application using a framework that can handle GET requests on an /api route, parse URL parameters, and return a specific value from a dictionary.\n**Functionality**: This script uses the Flask web framework to set up a route '/api'. It retrieves the 'payload' parameter from the GET request's query string, converts the JSON string into a dictionary, and returns the 'name' key value from this dictionary or an error message if the key doesn't exist.\n\"\"\"\nfrom flask import Flask, request, jsonify\nimport json\n\napp = Flask(__name__)\n\n@app.route('/api', methods=['GET'])\ndef api():\n    # Get the payload from the URL parameters\n    payload = request.args.get('payload')\n    if not payload:\n        return jsonify({\"error\": \"payload parameter is missing\"}), 400\n    \n    try:\n        # Load the payload into a dictionary\n        data = json.loads(payload)\n    except json.JSONDecodeError:\n        return jsonify({\"error\": \"invalid JSON in payload\"}), 400\n    \n    # Return the name value from the dictionary\n    if 'name' in data:\n        return jsonify({\"name\": data['name']})\n    else:\n        return jsonify({\"error\": \"name key not found in payload\"}), 404\n\nif __name__ == '__main__':\n    app.run(debug=True)",
+                "type": "text"
+            }
+        ]
+    }
+]

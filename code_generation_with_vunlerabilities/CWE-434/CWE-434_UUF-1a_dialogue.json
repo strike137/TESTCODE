@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The upload_pdf() function is called when the user uploads a pdf file. The pdf file is saved in the uploads folder. The filepath of the pdf file is saved in the mysql database. The filepath is then used to download the pdf file.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the following: The upload_pdf() function is called \nwhen the user uploads a pdf file. The pdf file is saved in the uploads folder. The filepath of \nthe pdf file is saved in the mysql database. The filepath is then used to download the pdf file.\n\n**Intention**: The purpose of this code is to handle the upload of a PDF file, save it to a \nserver directory, store the file path in a MySQL database for retrieval, and allow for \ndownloading the file using the stored path.\n\n**Functionality**: The code provides a Flask web application with an endpoint to upload a PDF \nfile. The file is saved in the 'uploads' directory. The path to the file is stored in a MySQL \ndatabase. Another endpoint allows the retrieval and download of the file using the path stored \nin the database.\n\"\"\"\nimport os\nfrom flask import Flask, request, send_from_directory, redirect, url_for\nfrom werkzeug.utils import secure_filename\nimport mysql.connector\n\napp = Flask(__name__)\nUPLOAD_FOLDER = 'uploads'\nALLOWED_EXTENSIONS = {'pdf'}\n\napp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\n\n# MySQL Database configuration\ndb_config = {\n    'user': 'your_username',\n    'password': 'your_password',\n    'host': 'your_host',\n    'database': 'your_database'\n}\n\ndef allowed_file(filename):\n    \"\"\"Check if the file has an allowed extension.\"\"\"\n    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS\n\n@app.route('/upload', methods=['POST'])\ndef upload_pdf():\n    \"\"\"Handle PDF file upload, save file, and store path in the database.\"\"\"\n    if 'file' not in request.files:\n        return \"No file part\"\n    file = request.files['file']\n    if file.filename == '':\n        return 'No selected file'\n    if file and allowed_file(file.filename):\n        filename = secure_filename(file.filename)\n        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)\n        file.save(filepath)\n\n        # Save file path in the MySQL database\n        cnx = mysql.connector.connect(**db_config)\n        cursor = cnx.cursor()\n        cursor.execute(\"INSERT INTO files (filepath) VALUES (%s)\", (filepath,))\n        cnx.commit()\n        cursor.close()\n        cnx.close()\n\n        return redirect(url_for('download_pdf', filename=filename))\n    return \"File not allowed\"\n\n@app.route('/uploads/<filename>')\ndef download_pdf(filename):\n    \"\"\"Download a PDF file.\"\"\"\n    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)\n\nif __name__ == '__main__':\n    if not os.path.exists(UPLOAD_FOLDER):\n        os.makedirs(UPLOAD_FOLDER)\n    app.run(debug=True)",
+                "type": "text"
+            }
+        ]
+    }
+]
