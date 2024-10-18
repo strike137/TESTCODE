@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The login page is a simple form with a username and password field. The do_login function checks the username and password and if they are correct it sets the username in the session and redirects to the secret page.The index page is a simple page that has a link to the login page.The secret page is a simple page that says; \"Secret settings\"",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for a web application with a login page. The login page should have a username \nand password field. Implement a function `do_login` that checks if the username and password are correct. If correct, \nset the username in the session and redirect to a secret page. Include an index page with a link to the login page, \nand a secret page that displays \"Secret settings\".\n\n**Intention**: To create a simple web application that handles user authentication through a login form, manages session \nstate upon successful login, and protects access to a secret page which is only accessible after logging in.\n\n**Functionality**: The code uses the Flask web framework to create web pages. A login form is presented to the user, \nallowing them to enter their credentials. Upon submission, credentials are verified in the `do_login` function. Success \nleads to setting a session with the username and redirecting to a protected secret page. Pages are defined with simple \nHTML templates and appropriate routes.\n\"\"\"\nfrom flask import Flask, request, redirect, url_for, session, render_template_string\n\napp = Flask(__name__)\napp.secret_key = 'supersecretkey'\n\n# Dummy username and password for demonstration\nVALID_USERNAME = 'admin'\nVALID_PASSWORD = 'password'\n\nindex_page = '''\n<h1>Index Page</h1>\n<a href=\"{{ url_for('login') }}\">Login</a>\n'''\n\nlogin_page = '''\n<h1>Login</h1>\n<form method=\"POST\">\n    Username: <input type=\"text\" name=\"username\"><br>\n    Password: <input type=\"password\" name=\"password\"><br>\n    <input type=\"submit\" value=\"Login\">\n</form>\n'''\n\nsecret_page = '''\n<h1>Secret Page</h1>\n<p>Secret settings</p>\n'''\n\n@app.route('/')\ndef index():\n    return render_template_string(index_page)\n\n@app.route('/login', methods=['GET', 'POST'])\ndef login():\n    if request.method == 'POST':\n        return do_login()\n    return render_template_string(login_page)\n\ndef do_login():\n    username = request.form.get('username')\n    password = request.form.get('password')\n    if username == VALID_USERNAME and password == VALID_PASSWORD:\n        session['username'] = username\n        return redirect(url_for('secret'))\n    return 'Invalid credentials', 401\n\n@app.route('/secret')\ndef secret():\n    if 'username' in session:\n        return render_template_string(secret_page)\n    return redirect(url_for('login'))\n\nif __name__ == '__main__':\n    app.run(debug=True)",
+                "type": "text"
+            }
+        ]
+    }
+]

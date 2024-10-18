@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following:  The user enters the username and password in the login page. The username and password are sent to the login function. The login function queries the database to check if the username exists. If the username exists it checks if the password is correct. If the password is correct it redirects the user to the home page. If the password is incorrect it returns.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for user login functionality where a username and a password are entered by the user, and the login function checks their credentials against a database to validate access. If the credentials are correct, the user is redirected; otherwise, access is denied.\n\n**Intention**: The purpose of this code is to authenticate users based on their username and password by checking these credentials against a stored database and directing them based on the result of this validation.\n\n**Functionality**: The code includes a simulated login function that:\n- Receives a username and a password.\n- Checks the database (simulated with a dictionary) for the existence of the username.\n- Validates the provided password against the stored password.\n- Redirects to a home page if the credentials are correct.\n- Provides feedback if the credentials are incorrect.\n\"\"\"\n# Simulated database with usernames and passwords\nuser_database = {\n    \"john_doe\": \"secure123\",\n    \"jane_smith\": \"password456\"\n}\n\ndef login(username, password):\n    \"\"\"\n    Authenticates a user based on a username and password.\n\n    Args:\n        username (str): The username entered by the user.\n        password (str): The password entered by the user.\n\n    Returns:\n        str: A message indicating the success or failure of the login attempt.\n    \"\"\"\n    # Check if the username exists in the database\n    if username in user_database:\n        # Check if the entered password matches the password in the database\n        if user_database[username] == password:\n            return \"Redirecting to the home page...\"\n        else:\n            return \"Incorrect password. Access denied.\"\n    else:\n        return \"Username not found. Access denied.\"\n\n# Example usage (this would be replaced with real input in an actual application)\nusername_input = \"john_doe\"\npassword_input = \"secure123\"\nprint(login(username_input, password_input))",
+                "type": "text"
+            }
+        ]
+    }
+]

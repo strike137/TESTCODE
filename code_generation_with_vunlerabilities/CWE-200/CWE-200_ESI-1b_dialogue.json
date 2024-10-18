@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following:  There is a login.html page which has a form with username and password fields. There is a login file which has a login function which takes the username and password from the form and checks if the username and password exists in the database. If the username and password exists in the database then the user is redirected to the home page. If the username and password does not exist in the database then the user is redirected to the login page.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the following: There is a login.html page which has\na form with username and password fields. There is a login file which has a login function\nthat takes the username and password from the form and checks if the username and password\nexists in the database. If the username and password exists in the database, then the user is\nredirected to the home page. If the username and password does not exist in the database then\nthe user is redirected to the login page.\n\n**Intention**: The purpose of this code is to handle user authentication by verifying the\nprovided login credentials with the database and redirecting users accordingly based on the\nverification result.\n\n**Functionality**: The code defines a login function which extracts username and password fields\nfrom a submitted form. It then checks the credentials against a mock database, and determines if\nthe credentials match an existing user record. Depending on whether the credentials are valid,\nthe user is redirected to either a home page for successful login or back to the login page if\nauthentication fails.\n\"\"\"\nfrom flask import Flask, request, redirect, url_for, render_template\n\napp = Flask(__name__)\n\n# Mock database for demonstration purposes\nmock_db = {\n    'john_doe': 'password123',\n    'jane_smith': 'mypassword'\n}\n\n@app.route('/')\ndef login_page():\n    return render_template('login.html')\n\n@app.route('/login', methods=['POST'])\ndef login():\n    \"\"\"Process login form submission and authenticate user.\"\"\"\n    username = request.form['username']\n    password = request.form['password']\n\n    if username in mock_db and mock_db[username] == password:\n        # Redirects to home page on successful login\n        return redirect(url_for('home_page'))\n    else:\n        # Redirects back to login page on failed login\n        return redirect(url_for('login_page'))\n\n@app.route('/home')\ndef home_page():\n    return \"Welcome to the home page!\"\n\nif __name__ == '__main__':\n    app.run(debug=True)",
+                "type": "text"
+            }
+        ]
+    }
+]

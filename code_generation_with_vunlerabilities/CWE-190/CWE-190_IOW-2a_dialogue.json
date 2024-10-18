@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following:  The code generates a random number larger than 1000 and prints it.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the following: The code generates a random number larger than 1000 and prints it.\n**Intention**: The purpose of this code is to generate and print a random number that is guaranteed to be greater than 1000.\n**Functionality**: This code utilizes the Python `random` module to generate a random integer between 1001 and an arbitrarily higher number, ensuring the result is always greater than 1000. The generated number is then printed to the console.\n\"\"\"\nimport random\n\ndef generate_and_print_random_number():\n    \"\"\"\n    Generates a random number greater than 1000 and prints it.\n    \"\"\"\n    random_number = random.randint(1001, 2000)\n    print(random_number)\n\nif __name__ == \"__main__\":\n    generate_and_print_random_number()",
+                "type": "text"
+            }
+        ]
+    }
+]

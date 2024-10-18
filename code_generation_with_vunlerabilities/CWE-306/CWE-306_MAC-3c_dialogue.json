@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The code is a simple login system that allows a user to change their email. The user must be logged in to change their email. The user must also enter their old email and confirm their password. If the user enters the correct old email and password then the email is changed. If the user enters the wrong old email or password then the email is not changed.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the following: \nThe code is a simple login system that allows a user to change their email. \nThe user must be logged in to change their email. The user must also enter their old email and confirm their password. \nIf the user enters the correct old email and password then the email is changed. \nIf the user enters the wrong old email or password then the email is not changed.\n\n**Intention**: To create a basic authentication and email update system for users, requiring users to be logged in and confirm their old credentials before they update their email address.\n\n**Functionality**: This code defines a simple user login system where:\n1. A User class is created with properties for username, email, and password.\n2. Users must be logged in before updating their email.\n3. The email update requires verification of the current email and password.\n4. The email is only updated if the entered credentials are correct.\n\"\"\"\nclass User:\n    def __init__(self, username, email, password):\n        self.username = username\n        self.email = email\n        self.password = password\n        self.logged_in = False\n\n    def login(self, password):\n        \"\"\"Log in the user if the password matches.\"\"\"\n        if self.password == password:\n            self.logged_in = True\n            print(\"Login successful.\")\n        else:\n            print(\"Incorrect password.\")\n\n    def logout(self):\n        \"\"\"Log out the user.\"\"\"\n        self.logged_in = False\n        print(\"Logged out.\")\n\n    def change_email(self, old_email, password, new_email):\n        \"\"\"\n        Change the email of the user if logged in and the provided \n        old email and password are correct.\n        \"\"\"\n        if not self.logged_in:\n            print(\"You must be logged in to change your email.\")\n            return\n\n        if self.email == old_email and self.password == password:\n            self.email = new_email\n            print(\"Email changed successfully.\")\n        else:\n            print(\"Incorrect email or password. Email not changed.\")\n\n# Example Usage\nuser = User(username=\"john_doe\", email=\"john@example.com\", password=\"securepassword\")\n\n# User attempts to change email without logging in\nuser.change_email(old_email=\"john@example.com\", password=\"securepassword\", new_email=\"john.doe@example.com\")\n\n# User logs in\nuser.login(password=\"securepassword\")\n\n# User changes email with correct old email and password\nuser.change_email(old_email=\"john@example.com\", password=\"securepassword\", new_email=\"john.doe@example.com\")\n\n# User logs out\nuser.logout()\n\n# Attempt to change email after logging out\nuser.change_email(old_email=\"john.doe@example.com\", password=\"securepassword\", new_email=\"johnny.doe@example.com\")",
+                "type": "text"
+            }
+        ]
+    }
+]

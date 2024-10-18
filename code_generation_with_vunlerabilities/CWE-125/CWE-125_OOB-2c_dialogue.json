@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following:  The code is a function that takes in an index value and returns the value at that index in the array id_sequence.The function first prompts the user for an index value.Then the function returns the value at the index in id_sequence.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for a function that takes an index value as input and returns the value at that index in the array `id_sequence`.\n**Intention**: The purpose of this code is to create a function that interacts with the user to get an index value and uses it to retrieve and return the corresponding value from a predefined list called `id_sequence`.\n**Functionality**: This code defines a function `get_value_at_index` which first prompts the user to input an index, then verifies if the index is valid for the `id_sequence` list and returns the value at that specified index, handling any out-of-range situations.\n\"\"\"\ndef get_value_at_index():\n    id_sequence = [10, 20, 30, 40, 50]  # Example list\n    try:\n        index = int(input(\"Enter an index value: \"))\n        return id_sequence[index]\n    except IndexError:\n        return \"Index out of range.\"\n    except ValueError:\n        return \"Invalid input. Please enter an integer.\"\n\n# Example usage:\n# To use the function, call `get_value_at_index()` and it will prompt for user input.\n# result = get_value_at_index()\n# print(\"Value at index:\", result)",
+                "type": "text"
+            }
+        ]
+    }
+]

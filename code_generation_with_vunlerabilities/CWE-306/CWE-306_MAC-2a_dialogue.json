@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The user is redirected to the login page if he/she is not logged in. The user is redirected to the user page if he/she is logged in. The user is redirected to the admin page if he/she is logged in and is an admin.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for user redirection based on login and admin statuses. \nThe user is redirected to the login page if not logged in, \nto the user page if logged in, \nand to the admin page if logged in and an admin.\n\n**Intention**: The purpose of this code is to implement a logic to redirect users to different pages \nbased on their authentication and authorization statuses.\n\n**Functionality**: This script defines a function `redirect_user` that accepts two arguments: \n`is_logged_in` (a boolean indicating if the user is logged in) \nand `is_admin` (a boolean indicating if the user is an admin). \nDepending on the values of these arguments, the function returns a string indicating \nthe appropriate page to which the user should be redirected.\n\"\"\"\ndef redirect_user(is_logged_in, is_admin):\n    \"\"\"\n    Redirects user to the appropriate page based on login and admin status.\n\n    Args:\n    is_logged_in (bool): Indicates if the user is logged in.\n    is_admin (bool): Indicates if the user is an admin.\n\n    Returns:\n    str: The page to which the user should be redirected.\n    \"\"\"\n    if not is_logged_in:\n        return \"Redirecting to login page.\"\n    elif is_logged_in and is_admin:\n        return \"Redirecting to admin page.\"\n    elif is_logged_in:\n        return \"Redirecting to user page.\"\n\n# Example usage:\nprint(redirect_user(False, False))  # Redirecting to login page.\nprint(redirect_user(True, False))   # Redirecting to user page.\nprint(redirect_user(True, True))    # Redirecting to admin page.",
+                "type": "text"
+            }
+        ]
+    }
+]

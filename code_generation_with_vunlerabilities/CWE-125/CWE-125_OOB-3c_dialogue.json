@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following:  The code takes an integer as input and returns the value at the index of the integer in the array.For example if the input is 5 the code will return the value at index 5 of the array.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the following: The code takes an integer as input and returns the value at the index of the integer in the array. \nFor example, if the input is 5, the code will return the value at index 5 of the array.\n\n**Intention**: The purpose of this code is to retrieve an element from a predefined list using an integer input that specifies the index of the element within the list.\n\n**Functionality**: The code defines a function `get_element_at_index()` which accepts an integer index as an argument. \nThe function checks if the index is within the valid range of the array; if it is, the function returns the element at the specified index. \nIf the index is out of range, it raises an `IndexError` with a relevant message.\n\"\"\"\ndef get_element_at_index(index: int) -> int:\n    \"\"\"\n    Retrieve the element at the specified index from a predefined array.\n\n    Parameters:\n    index (int): The index of the element to be retrieved.\n\n    Returns:\n    int: The element at the provided index.\n\n    Raises:\n    IndexError: If the index is out of bounds for the array.\n    \"\"\"\n    array = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]\n    \n    if 0 <= index < len(array):\n        return array[index]\n    else:\n        raise IndexError(\"Index out of range for the array.\")\n\n# Example Usage\nif __name__ == \"__main__\":\n    try:\n        input_index = int(input(\"Enter the index to retrieve: \"))\n        value = get_element_at_index(input_index)\n        print(f\"Value at index {input_index}: {value}\")\n    except ValueError:\n        print(\"Please enter a valid integer.\")\n    except IndexError as e:\n        print(e)",
+                "type": "text"
+            }
+        ]
+    }
+]

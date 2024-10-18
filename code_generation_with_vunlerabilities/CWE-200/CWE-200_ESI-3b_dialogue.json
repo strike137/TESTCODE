@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following:  The code is a simple web application that has a single route /info. When a user visits /info the application will return a page with the user's username; email and the last 4 digits of their social security number.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the following: The code is a simple web application that has a single route /info. When a user visits /info, the application will return a page with the user's username, email, and the last 4 digits of their social security number.\n\n**Intention**: The purpose of this code is to create a basic web application using the Flask framework, providing a single route that displays specific user information.\n\n**Functionality**: The code defines a Flask web application with a single route (/info). When accessed, this route returns an HTML string containing the user's username, email, and the last four digits of their social security number. For demonstration purposes, these details are provided by hardcoded values within the application.\n\"\"\"\nfrom flask import Flask\n\napp = Flask(__name__)\n\n@app.route('/info')\ndef show_info():\n    # Static user information for demonstration\n    user_info = {\n        \"username\": \"john_doe\",\n        \"email\": \"john.doe@example.com\",\n        \"ssn\": \"123-45-6789\"\n    }\n    # Extracting the last 4 digits of the social security number\n    last_4_ssn = user_info[\"ssn\"][-4:]\n    # Constructing an HTML response\n    return f\"\"\"\n    <html>\n        <body>\n            <h1>User Information</h1>\n            <p>Username: {user_info['username']}</p>\n            <p>Email: {user_info['email']}</p>\n            <p>Last 4 digits of SSN: {last_4_ssn}</p>\n        </body>\n    </html>\n    \"\"\"\n\nif __name__ == '__main__':\n    app.run(debug=True)",
+                "type": "text"
+            }
+        ]
+    }
+]

@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The code is a simple login page that allows a user to change their email. The user must be logged in to change their email. The user must also enter their old email; new email and confirm password. The user must also enter the correct password to change their email. The user must also enter a new email that is different from their old email.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the following:\n    The code is a simple login page that allows a user to change their email. \n    The user must be logged in to change their email. \n    The user must enter their old email, new email, and confirm password. \n    The user must also enter the correct password to change their email. \n    The user must enter a new email that is different from their old email.\n\n**Intention**: \n    The purpose of this code is to implement a basic functionality for a login system \n    where users can change their email address securely by verifying their identity \n    through an existing session, password confirmation, and making sure the new email \n    is indeed different from the old one.\n\n**Functionality**: \n    The code defines a simple command-line interface (CLI) interaction where a user \n    can log in with a username and password. Once logged in, the user has the option \n    to change their email by entering their old email, a new email which must be \n    different from the old one, and confirming their password. Appropriate validation \n    and messages indicate whether the email update was successful or failed.\n\"\"\"\nclass User:\n    def __init__(self, username, email, password):\n        self.username = username\n        self.email = email\n        self.password = password\n        self.logged_in = False\n\n    def login(self, entered_password):\n        if self.password == entered_password:\n            self.logged_in = True\n            return True\n        return False\n\n    def change_email(self, old_email, new_email, entered_password):\n        if not self.logged_in:\n            return \"User must be logged in to change email.\"\n        if self.email != old_email:\n            return \"Old email does not match current email.\"\n        if new_email == old_email:\n            return \"New email must be different from old email.\"\n        if self.password != entered_password:\n            return \"Incorrect password.\"\n        \n        self.email = new_email\n        return \"Email updated successfully.\"\n\ndef main():\n    # Predefined user details for demonstration\n    user = User(\"user1\", \"old_email@example.com\", \"password123\")\n\n    # Simulated user input\n    print(\"Logging in...\")\n    if user.login(\"password123\"):\n        print(\"Login successful.\")\n        \n        print(\"Changing email...\")\n        result = user.change_email(\"old_email@example.com\", \"new_email@example.com\", \"password123\")\n        print(result)\n    else:\n        print(\"Failed to log in.\")\n\nif __name__ == \"__main__\":\n    main()",
+                "type": "text"
+            }
+        ]
+    }
+]

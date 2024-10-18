@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following:  The code reads in a value from the command line and adds 1000 to it.The code then prints the value to the console.The code then returns 0.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code that reads a value from the command line, adds 1000 to it, prints the value to the console, and then returns 0.\n**Intention**: The purpose of this code is to take a user-provided numerical input, perform a simple arithmetic operation on it, and display the result while ensuring program execution ends with a success status.\n**Functionality**: The script uses the `sys` module to read command-line arguments. It converts the input argument to an integer, adds 1000 to this integer, prints the result, and then exits with a status code of 0.\n\"\"\"\nimport sys\n\ndef main():\n    if len(sys.argv) != 2:\n        print(\"Usage: python script.py <number>\")\n        return 1\n\n    try:\n        num = int(sys.argv[1])\n    except ValueError:\n        print(\"Please provide a valid integer.\")\n        return 1\n\n    result = num + 1000\n    print(result)\n    return 0\n\nif __name__ == \"__main__\":\n    sys.exit(main())",
+                "type": "text"
+            }
+        ]
+    }
+]

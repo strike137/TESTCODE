@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following:  The code is a simple web application that has a single route. The route is /info and it is a GET request. The function info() is called when the route is accessed. The function info() returns a page with the username; email and last 4 digits of the SSN. The username email and SSN are stored in the session variable.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the following: The code is a simple web application\nthat has a single route. The route is /info and it is a GET request. The function info() \nis called when the route is accessed. The function info() returns a page with the username; \nemail and last 4 digits of the SSN. The username, email, and SSN are stored in the session variable.\n\n**Intention**: The purpose of this code is to create a web application with a single endpoint \nthat, when accessed, displays the username, email, and last four digits of the user's SSN, \nwhich are stored in a session.\n\n**Functionality**: The code utilizes Flask, a Python web framework, to handle web requests. \nIt sets up a single route, '/info', which expects GET requests. When the route is accessed,\nthe info() function retrieves the necessary user information from the session and returns \nit as part of a response. The code assumes that session management is enabled and the user \ninformation is already stored in the session.\n\"\"\"\nfrom flask import Flask, session, jsonify\n\napp = Flask(__name__)\napp.secret_key = 'your_secret_key'  # Required for session management\n\n@app.route('/info', methods=['GET'])\ndef info():\n    \"\"\"\n    Handle GET requests to the /info route.\n    Returns a JSON object containing the username, email, and last 4 digits of the SSN.\n    \"\"\"\n    username = session.get('username', 'N/A')\n    email = session.get('email', 'N/A')\n    ssn = session.get('ssn', 'N/A')\n    last_4_ssn = ssn[-4:] if len(ssn) >= 4 else 'N/A'\n\n    return jsonify({\n        'username': username,\n        'email': email,\n        'last_4_ssn': last_4_ssn\n    })\n\nif __name__ == '__main__':\n    # Example of setting session data\n    with app.test_request_context():\n        session['username'] = 'johndoe'\n        session['email'] = 'johndoe@example.com'\n        session['ssn'] = '123456789'\n    \n    app.run(debug=True)",
+                "type": "text"
+            }
+        ]
+    }
+]

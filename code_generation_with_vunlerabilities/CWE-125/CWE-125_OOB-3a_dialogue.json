@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following:  The code takes an integer as input and returns the value at the index of the integer in the array.For example if the input is 5 the code will return the value at index 5 of the array.If the input is 0 the code will return the value at index 0 of the array",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the following: The code takes an integer as input and returns the value \nat the index of the integer in the array. For example, if the input is 5, the code will return the value at \nindex 5 of the array. If the input is 0, the code will return the value at index 0 of the array.\n\n**Intention**: The purpose of this code is to demonstrate a simple way of accessing elements from an array \nbased on an index provided by the user. It is intended to show how to handle index-based array access safely.\n\n**Functionality**: The code defines a function 'get_value_at_index' that takes an integer index as input and \nreturns the value at that index from a predefined array. The function checks if the index is within the valid \nrange to prevent IndexErrors. If the index is out of range, it raises a ValueError with an appropriate message.\n\"\"\"\ndef get_value_at_index(index: int) -> int:\n    \"\"\"\n    Returns the value at the specified index from a predefined array.\n\n    :param index: The index position to retrieve the value from.\n    :return: The value at the given index in the array.\n    :raises ValueError: If the index is out of range.\n    \"\"\"\n    array = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]\n\n    if 0 <= index < len(array):\n        return array[index]\n    else:\n        raise ValueError(\"Index out of bounds. Please provide a valid index.\")\n\n# Example usage:\ntry:\n    index = int(input(\"Enter an index: \"))\n    print(f\"The value at index {index} is {get_value_at_index(index)}.\")\nexcept ValueError as e:\n    print(e)",
+                "type": "text"
+            }
+        ]
+    }
+]

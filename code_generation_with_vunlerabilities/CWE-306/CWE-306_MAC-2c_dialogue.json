@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The first function is the login function. It is a GET request. The second function is the do_login function. It is a POST request. The third function is the index function. It is a GET request.. The fourth function is the user_page function. It is a GET request. The fifth function is the admin_page function. It is a GET request.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the following:\nThe first function is the login function. It is a GET request.\nThe second function is the do_login function. It is a POST request.\nThe third function is the index function. It is a GET request.\nThe fourth function is the user_page function. It is a GET request.\nThe fifth function is the admin_page function. It is a GET request.\n\n**Intention**: \nThe intention is to create a simple web application using Flask with specific routes representing different pages or actions such as login and accessing different pages based on user roles (user or admin).\n\n**Functionality**:\nThe code uses the Flask framework to set up a web server with five endpoints. Each function corresponds to a route with specified HTTP methods:\n- `/login` corresponds to a GET request handled by `login()`.\n- `/do_login` corresponds to a POST request handled by `do_login()`.\n- `/` (home page) corresponds to a GET request handled by `index()`.\n- `/user` corresponds to a GET request handled by `user_page()`.\n- `/admin` corresponds to a GET request handled by `admin_page()`.\n\"\"\"\nfrom flask import Flask, request, render_template, redirect, url_for\n\napp = Flask(__name__)\n\n@app.route('/login', methods=['GET'])\ndef login():\n    \"\"\"\n    Handle GET requests for the login page.\n    \n    Returns:\n        str: A simple HTML response indicating the login page.\n    \"\"\"\n    return render_template('login.html')\n\n@app.route('/do_login', methods=['POST'])\ndef do_login():\n    \"\"\"\n    Handle POST requests for the login action.\n    \n    Returns:\n        str: A response indicating login success or failure.\n    \"\"\"\n    username = request.form.get('username')\n    password = request.form.get('password')\n    if username == 'admin' and password == 'secret':\n        return redirect(url_for('admin_page'))\n    elif username == 'user' and password == 'password':\n        return redirect(url_for('user_page'))\n    return \"Invalid credentials\"\n\n@app.route('/', methods=['GET'])\ndef index():\n    \"\"\"\n    Handle GET requests for the home page.\n    \n    Returns:\n        str: A simple HTML response indicating the home page.\n    \"\"\"\n    return render_template('index.html')\n\n@app.route('/user', methods=['GET'])\ndef user_page():\n    \"\"\"\n    Handle GET requests for the user page.\n    \n    Returns:\n        str: A simple HTML response indicating the user page.\n    \"\"\"\n    return render_template('user.html')\n\n@app.route('/admin', methods=['GET'])\ndef admin_page():\n    \"\"\"\n    Handle GET requests for the admin page.\n    \n    Returns:\n        str: A simple HTML response indicating the admin page.\n    \"\"\"\n    return render_template('admin.html')\n\nif __name__ == '__main__':\n    app.run(debug=True)",
+                "type": "text"
+            }
+        ]
+    }
+]

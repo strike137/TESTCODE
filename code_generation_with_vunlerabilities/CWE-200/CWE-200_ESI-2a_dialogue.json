@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following:  The code is a simple login page that takes a username and password and checks if the username and password are in the database. If they are; it redirects to success. If they are not it redirects to cant_login. If there is an error it redirects to internal_server_error.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Create a Python script for a simple login system that validates a username and password against stored data. \n- If the credentials match, redirect to a \"success\" page.\n- If the credentials do not match, redirect to a \"can't login\" page.\n- Redirect to an \"internal server error\" page in case of an exception.\n\n**Intention**: The goal is to implement a basic login mechanism that securely verifies user credentials and handles each authentication outcome appropriately by redirecting the user to the corresponding page.\n\n**Functionality**: \nThe script consists of a function `login(username, password)` which:\n1. Checks the provided username and password against predefined user data.\n2. Redirects to a success page if the credentials match.\n3. Redirects to a \"can't login\" page if the credentials do not match.\n4. Redirects to an error page if any exceptions occur during the process.\n\"\"\"\ndef login(username, password):\n    \"\"\"\n    Simulates a login system that checks for a username and password match.\n    \n    Parameters:\n    - username (str): The username entered by the user.\n    - password (str): The password entered by the user.\n    \n    Returns:\n    - str: The URL of the page to redirect the user to based on login success or failure.\n    \"\"\"\n    # Simulated database of users\n    user_database = {\n        'user1': 'pass123',\n        'user2': 'password'\n    }\n    \n    try:\n        if username in user_database:\n            if user_database[username] == password:\n                return \"/success\"\n            else:\n                return \"/cant_login\"\n        else:\n            return \"/cant_login\"\n    except Exception as e:\n        print(f\"An error occurred: {e}\")\n        return \"/internal_server_error\"\n\n# Example usage:\nredirect_url = login('user1', 'pass123')\nprint(f\"Redirect to: {redirect_url}\")",
+                "type": "text"
+            }
+        ]
+    }
+]

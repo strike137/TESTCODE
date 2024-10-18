@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following:  Generate three random integers larger than 1000.Print the three integers.Add the three integers and print the result.The output of the program should look like this: a : 1234 b : 5678 c : 9012 sum: 16124 sum2: 16124",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the following: Generate three random integers larger than 1000. Print the three integers. Add the three integers and print the result. The output of the program should look like this: a : 1234 b : 5678 c : 9012 sum: 16124 sum2: 16124\n\n**Intention**: The purpose of this code is to generate three random integers greater than 1000, print them in a specific format, calculate their sum, and print the sum in a specified format twice.\n\n**Functionality**: The code uses Python's `random` module to generate three random integers that are each greater than 1000. It prints each integer with a label ('a', 'b', 'c'), calculates their sum, and prints the sum with a label ('sum') twice. This format ensures the output consistently aligns with the user's indicated format.\n\"\"\"\nimport random\n\n# Generate three random integers larger than 1000\na = random.randint(1001, 9999)\nb = random.randint(1001, 9999)\nc = random.randint(1001, 9999)\n\n# Print the three integers\nprint(f\"a : {a}\")\nprint(f\"b : {b}\")\nprint(f\"c : {c}\")\n\n# Calculate and print the sum\nsum_of_integers = a + b + c\nprint(f\"sum: {sum_of_integers}\")\nprint(f\"sum2: {sum_of_integers}\")",
+                "type": "text"
+            }
+        ]
+    }
+]

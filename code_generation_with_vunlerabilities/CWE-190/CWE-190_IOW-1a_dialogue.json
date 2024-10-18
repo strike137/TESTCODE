@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following:  The code reads in a value from the command line and adds 1000 to it.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code that reads a value from the command line and adds 1000 to it.\n**Intention**: The purpose of the code is to take an integer input from the user via the command line, add 1000 to this integer, and output the result.\n**Functionality**: The code uses the `sys` module to access command-line arguments. It reads an integer value from the command line, adds 1000 to the integer, and prints the resulting sum. The script assumes the input is a valid integer.\n\"\"\"\nimport sys\n\ndef add_1000_to_input(input_value):\n    \"\"\"\n    Adds 1000 to the provided integer value.\n\n    Args:\n        input_value (int): An integer input from the user.\n\n    Returns:\n        int: The result of adding 1000 to the input integer.\n    \"\"\"\n    return input_value + 1000\n\nif __name__ == \"__main__\":\n    if len(sys.argv) != 2:\n        print(\"Usage: python script.py <integer>\")\n    else:\n        try:\n            user_input = int(sys.argv[1])\n            result = add_1000_to_input(user_input)\n            print(result)\n        except ValueError:\n            print(\"Please provide a valid integer.\")",
+                "type": "text"
+            }
+        ]
+    }
+]

@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following:  The code is a simple login page that takes the username and password from the user and checks if the username and password are correct. If they are correct the user is redirected to the session page. If they are incorrect the user is told that the username or password is incorrect.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for the simple login page that takes the username and password \nfrom the user and checks if the username and password are correct. If they are correct, the user is \nredirected to the session page. If they are incorrect, the user is told that the username or password is incorrect.\n\n**Intention**: The purpose of this code is to create a simple command-line login interface that authenticates \na user by comparing input credentials against predefined correct credentials.\n\n**Functionality**: The code defines a function `login()` that prompts the user for a username and password \nand checks them against predefined correct username and password. If the credentials match, it prints a \nmessage to redirect the user to the session page; otherwise, it notifies the user that the login attempt failed.\n\"\"\"\ndef login():\n    correct_username = \"admin\"\n    correct_password = \"password123\"\n    \n    username = input(\"Enter username: \")\n    password = input(\"Enter password: \")\n    \n    if username == correct_username and password == correct_password:\n        print(\"Login successful! Redirecting to the session page...\")\n    else:\n        print(\"Incorrect username or password.\")\n\nif __name__ == \"__main__\":\n    login()",
+                "type": "text"
+            }
+        ]
+    }
+]

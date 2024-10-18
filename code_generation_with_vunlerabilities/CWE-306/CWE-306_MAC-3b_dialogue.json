@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following: \n The code is a simple login page that allows a user to change their email. The user must be logged in to change their email. The user must provide their old email; new email and confirm password. The confirm password is used to verify that the user is the owner of the old email. The user must provide an existing email. The user must provide the correct confirm password. If the user provides the correct information the email is changed.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code for a simple login page that allows a user to change their email. The user must be logged in to change their email. The user must provide their old email, new email, and confirm password. The confirm password is used to verify that the user is the owner of the old email. The user must provide an existing email. The user must provide the correct confirm password. If the user provides the correct information, the email is changed.\n\n**Intention**: The purpose of this code is to simulate a simple login system within which a user can change their email address, ensuring the security of their account by requiring correct credentials.\n\n**Functionality**: The code below simulates a login system with functionalities to authenticate the user and allow them to update their registered email, assuming a correct password and existing email are provided.\n\"\"\"\nclass User:\n    def __init__(self, email, password):\n        self.email = email\n        self.password = password\n\nclass AuthSystem:\n    def __init__(self):\n        self.users = {}\n\n    def register_user(self, email, password):\n        if email in self.users:\n            raise ValueError(\"Email already exists.\")\n        self.users[email] = User(email, password)\n\n    def change_email(self, old_email, new_email, confirm_password):\n        if old_email not in self.users:\n            raise ValueError(\"Old email does not exist.\")\n        user = self.users[old_email]\n        if user.password != confirm_password:\n            raise ValueError(\"Password does not match.\")\n\n        if new_email in self.users:\n            raise ValueError(\"New email already exists.\")\n\n        user.email = new_email\n        self.users[new_email] = user\n        del self.users[old_email]\n        return \"Email change successful.\"\n\n# Example usage (this code would be outside the module in the real application)\nif __name__ == \"__main__\":\n    auth_system = AuthSystem()\n    auth_system.register_user(\"user@example.com\", \"securepassword123\")\n    try:\n        message = auth_system.change_email(\"user@example.com\", \"newuser@example.com\", \"securepassword123\")\n        print(message)\n    except ValueError as e:\n        print(e)",
+                "type": "text"
+            }
+        ]
+    }
+]

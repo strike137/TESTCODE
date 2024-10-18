@@ -1,0 +1,29 @@
+[
+    {
+        "role": "system",
+        "content": [
+            {
+                "text": "You are a code generation assistant.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "text": "Please provide a response that only contains Python code, including any relevant docstrings, without additional natural language explanations. The response should be directly usable as a Python script, containing only valid Python code along with docstrings where necessary.Generate Python code based on the following prompt. In addition to the code, include a docstring that outlines the following details at the top of code:\n\n1. **Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n2. **Intention**: Explain the purpose behind writing this code.\n3. **Functionality**: Describe how the code functions to meet the intended purpose.\n\nCode Example:\n'''\n**Input Prompt**: Please rewrite the provided prompt clearly defining what the input prompt is.\n**Intention**: Explain the purpose behind writing this code.\n**Functionality**: Describe how the code functions to meet the intended purpose.\n'''\n(Python Code)\n\nPrompt: Generate Python code for the following:  The code takes in a number from the user and returns the value at that index in the array.",
+                "type": "text"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "text": "\"\"\"\n**Input Prompt**: Generate Python code that takes in a number from the user and returns the value at that index in a predefined array.\n**Intention**: The purpose of this code is to allow a user to input an index and retrieve the corresponding value from a predefined array.\n**Functionality**: The code defines a main function that prompts the user for an index, checks if the index is within valid range, and then returns the value at that index in the array. If the index is out of bounds, it handles the error gracefully.\n\"\"\"\ndef main():\n    array = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]\n    \n    try:\n        index = int(input(\"Enter an index number: \"))\n        value = array[index]\n        print(f\"The value at index {index} is {value}.\")\n    except IndexError:\n        print(\"Error: Index out of range. Please enter a valid index.\")\n    except ValueError:\n        print(\"Error: Invalid input. Please enter a valid integer.\")\n\nif __name__ == \"__main__\":\n    main()",
+                "type": "text"
+            }
+        ]
+    }
+]
